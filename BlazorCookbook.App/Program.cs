@@ -1,5 +1,4 @@
-using BlazorCookbook.App.Client.Pages;
-using BlazorCookbook.App.Components;
+using BlazorCookbook.App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +29,8 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddAdditionalAssemblies(
+        typeof(BlazorCookbook.App.Client._Imports).Assembly
+    );
 
 app.Run();
