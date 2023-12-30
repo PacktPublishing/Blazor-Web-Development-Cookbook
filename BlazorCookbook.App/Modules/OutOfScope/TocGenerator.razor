@@ -1,0 +1,21 @@
+﻿<h3>
+    Chapter @ChapterNumber.ToString("00")
+</h3>
+
+@for (int recipe = 1; recipe < RecipeQuantity + 1; recipe++)
+{
+    <div>
+        <a href="@ConstructUrl(recipe)">Recipe @recipe.ToString("00")</a>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public int ChapterNumber { get; set; }
+
+    [Parameter, EditorRequired]
+    public int RecipeQuantity { get; set; }
+
+    private string ConstructUrl(int recipe)
+        => $"/ch{ChapterNumber.ToString("00")}r{recipe.ToString("00")}";
+}
