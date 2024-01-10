@@ -1,0 +1,16 @@
+<div class="ticket">
+    <div class="ticket-info">
+        @Details
+    </div>
+    <div class="ticket-actions">
+        @Actions
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment Details { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Actions { get; set; }
+}

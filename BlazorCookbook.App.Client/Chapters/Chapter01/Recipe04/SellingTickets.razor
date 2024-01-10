@@ -1,0 +1,20 @@
+﻿@rendermode InteractiveWebAssembly
+
+<CascadingValue Value="Cart">
+
+    <Ticket Tariff="Adult" Price="10.00m" />
+    <Ticket Tariff="Child" Price="5.00m" />
+
+</CascadingValue>
+
+<div class="cart-summary">
+    <div class="cart-content">Items: @Cart.Volume </div>
+    <div class="cart-value">Price: @Cart.Value</div>
+</div>
+
+@code {
+    protected Cart Cart;
+
+    protected override void OnInitialized()
+        => Cart = new(() => InvokeAsync(StateHasChanged));
+}

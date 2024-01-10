@@ -1,0 +1,19 @@
+﻿@using BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05.Models
+
+@rendermode InteractiveWebAssembly
+
+<Ticket>
+    <Details>
+        @Data.Adult.Tariff (@Data.Adult.Price)
+    </Details>
+    <Actions>
+        <button @onclick="@(() => AddToCart(Data.Adult.Id))">
+            Add to cart
+        </button>
+    </Actions>
+</Ticket>
+
+@code {
+    public void AddToCart(Guid Id)
+        => Console.WriteLine($"Ticket {Id} added to cart!");
+}

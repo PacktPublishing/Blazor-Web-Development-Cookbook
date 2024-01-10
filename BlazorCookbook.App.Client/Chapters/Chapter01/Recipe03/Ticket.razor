@@ -1,0 +1,12 @@
+<div class="ticket">
+    <div class="name">@Tariff</div>
+    <div class="price">@(Price.ToString("0.00 $"))</div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Tariff { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public decimal Price { get; set; }
+}
