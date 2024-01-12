@@ -1,9 +1,21 @@
 <div class="ticket">
-    <div class="name">@Tariff</div>
-    <div class="price">@(Price.ToString("0.00 $"))</div>
+    <div class="name">
+        @Tariff
+        </div>
+    <div class="price">
+        @(Price.ToString("0.00 $"))
+    </div>
+    <div class="ticket-actions">
+        <button @onclick="@OnAdded">
+            Add to cart
+        </button>
+    </div>
 </div>
 
 @code {
     [Parameter] public string Tariff { get; set; }
     [Parameter] public decimal Price { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdded { get; set; }
 }
