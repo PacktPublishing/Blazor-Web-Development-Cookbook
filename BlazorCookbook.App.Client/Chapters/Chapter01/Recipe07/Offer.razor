@@ -1,0 +1,50 @@
+﻿@using BlazorCookbook.App.Client.Chapters.Chapter01.Recipe07.Models
+
+@rendermode InteractiveWebAssembly
+
+<Grid Data="@Data.Tickets" Context="ticket">
+    <Header>
+        <tr>
+            <td>Ticket code</td>
+            <td>Tariff</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+    </Header>
+    <Row>
+        <tr>
+            <td>@ticket.Id</td>
+            <td>@ticket.Tariff</td>
+            <td>@ticket.Price</td>
+            <td @onclick="() => AddToCart(ticket)">
+                Add to Cart
+            </td>
+        </tr>
+    </Row>
+</Grid>
+
+@if (AlertType is null) return;
+
+<DynamicComponent Type="@AlertType"
+                  Parameters="@AlertParams" />
+
+@code {
+    protected Type AlertType;
+    protected Dictionary<string, object> AlertParams;
+
+    public void AddToCart(TicketViewModel ticket)
+    {
+        AlertType = ticket.AvailableSeats == 0 ?
+            typeof(Alerts.SoldOut) :
+            typeof(Alerts.AddedToCart);
+
+        AlertParams = new();
+        if (ticket.AvailableSeats == 0)
+        {
+            AlertParams.Add(
+                nameof(ticket.Tariff),
+                ticket.Tariff
+            );
+        }
+    }
+}

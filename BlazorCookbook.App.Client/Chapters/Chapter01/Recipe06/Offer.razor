@@ -1,0 +1,29 @@
+﻿@using BlazorCookbook.App.Client.Chapters.Chapter01.Recipe06.Models
+
+@rendermode InteractiveWebAssembly
+
+<Grid Data="@Data.Tickets" Context="ticket">
+    <Header>
+        <tr>
+            <td>Ticket code</td>
+            <td>Tariff</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+    </Header>
+    <Row>
+        <tr>
+            <td>@ticket.Id</td>
+            <td>@ticket.Tariff</td>
+            <td>@ticket.Price</td>
+            <td @onclick="() => AddToCart(ticket)">
+                Add to Cart
+            </td>
+        </tr>
+    </Row>
+</Grid>
+
+@code {
+    public void AddToCart(TicketViewModel ticket)
+        => Console.WriteLine($"Ticket {ticket.Id} added to cart!");
+}
