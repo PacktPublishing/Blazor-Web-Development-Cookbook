@@ -1,3 +1,4 @@
+using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.ConfigureRecipe03()
+                .ConfigureRecipe04();
 
 var app = builder.Build();
 

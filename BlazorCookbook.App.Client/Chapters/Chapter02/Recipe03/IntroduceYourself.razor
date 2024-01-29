@@ -1,0 +1,37 @@
+@using BlazorCookbook.App.Client.Chapters.Chapter02.Recipe03.Data
+@rendermode InteractiveWebAssembly
+
+<h3>What's your name?</h3>
+
+<input class="form-control w-50"
+       @bind=@User
+       @bind:event="oninput"
+       @bind:after="@AutocompleteAsync" />
+
+<hr />
+
+@if (!Suggestions.Any())
+    return;
+
+<h5>Did you mean?</h5>
+@foreach (var name in Suggestions)
+{
+    <div>@name</div>
+}
+
+@code {
+    protected string User = string.Empty;
+
+    [Inject] private SuggestionsApi Api { get; init; }
+    protected IList<string> Suggestions = Array.Empty<string>();
+
+    private async Task AutocompleteAsync()
+    {
+        Suggestions = 
+            string.IsNullOrWhiteSpace(User) ?
+            Array.Empty<string>() :
+            await Api.FindAsync(User);
+
+        await InvokeAsync(StateHasChanged);
+    }
+}
