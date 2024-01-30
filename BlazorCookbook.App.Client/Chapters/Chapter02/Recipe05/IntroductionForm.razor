@@ -1,0 +1,41 @@
+<h5>What's your name?</h5>
+
+<input class="form-control w-50 mb-1"
+       @bind:event="oninput"
+       @bind="@Name"
+       @bind:after=@OnNameChanged />
+
+<h5>What's your skill level?</h5>
+
+<select class="form-control w-50 mb-1"
+        @onchange="@OnSkillChanged">
+    @foreach (var level in DataSeed.SkillLevels)
+    {
+        <option value="@level.Id">
+            @level.Title
+        </option>
+    }
+</select>
+
+@code {
+    [Parameter] public string Name { get; set; }
+    [Parameter]
+    public EventCallback<string> NameChanged { get; set; }
+
+    [Parameter] public SkillLevel Skill { get; set; }
+    [Parameter]
+    public EventCallback<SkillLevel> SkillChanged { get; set; }
+
+    private Task OnNameChanged()
+        => NameChanged.InvokeAsync(Name);
+
+    private Task OnSkillChanged(ChangeEventArgs args)
+    {
+        var id = int.Parse(args.Value.ToString());
+        var skill = DataSeed
+            .SkillLevels
+            .Single(it => it.Id == id);
+
+        return SkillChanged.InvokeAsync(skill);
+    }
+}

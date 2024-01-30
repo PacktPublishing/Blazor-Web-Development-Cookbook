@@ -1,0 +1,13 @@
+@rendermode InteractiveWebAssembly
+
+<IntroductionForm @bind-Name="@Name"
+                  @bind-Skill="@Skill" />
+
+<hr />
+
+<h5>Welcome @Name on level @Skill.Title!</h5>
+
+@code {
+    protected string Name = string.Empty;
+    protected SkillLevel Skill = DataSeed.SkillLevels[0];
+}
