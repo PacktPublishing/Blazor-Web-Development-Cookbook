@@ -9,7 +9,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.ConfigureRecipe03()
-                .ConfigureRecipe04();
+                .ConfigureRecipe04()
+                .ConfigureRecipe06();
 
 var app = builder.Build();
 
@@ -34,7 +35,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(
-        typeof(BlazorCookbook.App.Client._Imports).Assembly
+        typeof(_Imports).Assembly
     );
 
 app.Run();
