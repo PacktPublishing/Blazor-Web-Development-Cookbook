@@ -1,0 +1,25 @@
+﻿@rendermode InteractiveWebAssembly
+
+<button class="btn btn-sm btn-success"
+        @onclick="@ToggleTickets">
+    Toggle Tickets
+</button>
+<hr />
+
+@if (!ShowTickets) return;
+
+<ul>
+    @foreach (var ticket in Data.Tickets.All)
+    {
+        <li id="ticket-@ticket.Id">
+            @ticket.Title
+        </li>
+    }
+</ul>
+
+@code {
+    protected bool ShowTickets { get; set; }
+
+    private void ToggleTickets()
+        => ShowTickets = !ShowTickets;
+}
