@@ -1,0 +1,36 @@
+﻿@rendermode InteractiveWebAssembly
+
+<table>
+    <tbody>
+        @foreach (var ticket in Tickets.All)
+        {
+            <tr>
+                <td>@ticket.Title</td>
+                <td>
+                    <button class="btn btn-sm btn-success"
+                            @onclick=@(() => Show(ticket))>
+                        Show details
+                    </button>
+                    <button class="btn btn-sm btn-success"
+                            @onclick=@(() => ticket.Availability += 5)>
+                        Top up
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (SelectedTicket is null) return;
+
+<hr />
+<div>Title: @SelectedTicket.Title</div>
+<div>Price: @SelectedTicket.Price</div>
+<div>Availability: @SelectedTicket.Availability</div>
+
+@code {
+    internal Ticket? SelectedTicket;
+
+    private void Show(Ticket ticket)
+        => SelectedTicket = ticket;
+}

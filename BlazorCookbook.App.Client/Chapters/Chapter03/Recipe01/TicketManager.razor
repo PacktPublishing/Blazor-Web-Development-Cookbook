@@ -9,7 +9,7 @@
 @if (!ShowTickets) return;
 
 <ul>
-    @foreach (var ticket in Data.Tickets.All)
+    @foreach (var ticket in Tickets.All)
     {
         <li id="ticket-@ticket.Id">
             @ticket.Title
