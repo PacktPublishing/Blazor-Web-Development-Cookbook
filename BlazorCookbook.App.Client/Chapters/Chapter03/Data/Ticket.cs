@@ -1,6 +1,6 @@
 ﻿namespace BlazorCookbook.App.Client.Chapters.Chapter03.Data;
 
-internal record Ticket
+public sealed record Ticket
 {
     public Guid Id { get; init; }
 
@@ -9,6 +9,8 @@ internal record Ticket
     public decimal Price { get; init; }
 
     public int Availability { get; set; }
+
+    public bool Enabled { get; set; } = true;
 
     public Ticket(string title, decimal price)
     {

@@ -1,0 +1,34 @@
+﻿@rendermode InteractiveWebAssembly
+
+@foreach (var ticket in Tickets)
+{
+    <div class="d-flex justify-content-between w-50">
+        <div>@ticket.Title</div>
+        <div>
+            <AmsOptions OnShow="@(() => Show(ticket))"
+                        OnDisable="@(() => Disable(ticket))"
+                        OnRemove="@(() => Remove(ticket))" />
+        </div>
+    </div>
+}
+
+@if (SelectedTicket is null) return;
+
+<hr />
+<div>Title: @SelectedTicket.Title</div>
+<div>Price: @SelectedTicket.Price</div>
+<div>Enabled: @SelectedTicket.Enabled</div>
+
+@code {
+    internal List<Ticket> Tickets = new(Data.Tickets.All);
+    internal Ticket? SelectedTicket;
+
+    private void Show(Ticket ticket)
+        => SelectedTicket = ticket;
+
+    private void Remove(Ticket ticket)
+        => Tickets.Remove(ticket);
+
+    private void Disable(Ticket ticket)
+        => ticket.Enabled = false;
+}
