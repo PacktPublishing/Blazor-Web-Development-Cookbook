@@ -1,0 +1,33 @@
+﻿@rendermode InteractiveWebAssembly
+
+<h5>Quick creation</h5>
+
+<input value="@Creator"
+       @onkeydown="MonitorCreationRequest"
+       @onkeydown:preventDefault />
+
+<h5>Available tickets</h5>
+@foreach (var ticket in Tickets)
+{
+    <div>@ticket.Title</div>
+}
+
+@code {
+    internal string Creator = string.Empty;
+    internal List<Ticket> Tickets = new();
+
+    private void MonitorCreationRequest(KeyboardEventArgs args)
+    {
+        if (args.Key == "+")
+        {
+            Tickets.Add(new() { Title = Creator });
+            Creator = string.Empty;
+            return;
+        }
+
+        if (args.Key[0] >= 'A' && args.Key[0] >= 'Z')
+        {
+            Creator += args.Key;
+        }
+    }
+}
