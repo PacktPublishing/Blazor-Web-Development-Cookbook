@@ -1,0 +1,27 @@
+﻿@rendermode InteractiveWebAssembly
+
+@foreach (var ticket in Models)
+{
+    <div class="border m-1 p-1"
+         @onclick="@ticket.Expand">
+
+        <div>@ticket.Model.Title</div>
+
+        <div style="@ticket.DetailsStyle">
+            <div>Price: @ticket.Model.Price</div>
+
+            <button class="btn btn-sm btn-default"
+                    @onclick="@ticket.Collapse"
+                    @onclick:stopPropagation>
+                Hide
+            </button>
+        </div>
+
+    </div>
+}
+
+@code {
+    internal List<TicketViewModel> Models = Tickets.All
+        .Select(it => new TicketViewModel(it))
+        .ToList();
+}
