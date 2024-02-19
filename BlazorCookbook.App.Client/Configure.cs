@@ -1,4 +1,5 @@
-﻿using Recipe03 = BlazorCookbook.App.Client.Chapters.Chapter02.Recipe03.Data;
+﻿using BlazorCookbook.App.Client.Chapters.Chapter03.Recipe07;
+using Recipe03 = BlazorCookbook.App.Client.Chapters.Chapter02.Recipe03.Data;
 using Recipe04 = BlazorCookbook.App.Client.Chapters.Chapter02.Recipe04.Data;
 using Recipe06 = BlazorCookbook.App.Client.Chapters.Chapter02.Recipe06.Data;
 
@@ -21,6 +22,12 @@ public static class Configure
     public static IServiceCollection ConfigureRecipe06(this IServiceCollection services)
     {
         services.AddTransient<Recipe06.SuggestionsApi>();
+        return services;
+    }
+
+    public static IServiceCollection AddApiClientForChapter03Recipe07(this IServiceCollection services)
+    {
+        services.AddTransient<ApiClient>();
         return services;
     }
 }

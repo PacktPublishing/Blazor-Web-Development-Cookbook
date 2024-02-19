@@ -10,7 +10,8 @@ builder.Services.AddRazorComponents()
 
 builder.Services.ConfigureRecipe03()
                 .ConfigureRecipe04()
-                .ConfigureRecipe06();
+                .ConfigureRecipe06()
+                .AddApiClientForChapter03Recipe07();
 
 var app = builder.Build();
 

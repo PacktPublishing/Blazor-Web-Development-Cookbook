@@ -1,0 +1,25 @@
+﻿@rendermode InteractiveWebAssembly
+
+<LoadingIndicator Job="@GetTicketsAsync">
+    @if (Collection.Any())
+    {
+        <p>Loaded @Collection.Count elements.</p>
+    }
+</LoadingIndicator>
+
+<ProgressIndicator Job="ShareTicketsAsync"
+                   Elements="@Data.Tickets.All" />
+
+@code {
+    [Inject] private ApiClient Api { get; init; } = default!;
+
+    internal bool IsLoading, IsSharing;
+    internal double SharingProgress;
+    internal IList<Ticket> Collection = Array.Empty<Ticket>();
+
+    public async Task GetTicketsAsync()
+        => Collection = await Api.GetTicketsAsync(default);
+
+    public Task ShareTicketsAsync(Ticket ticket)
+        => Api.ShareTicketAsync(ticket, default);
+}

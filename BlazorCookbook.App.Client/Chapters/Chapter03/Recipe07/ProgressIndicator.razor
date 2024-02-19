@@ -1,0 +1,40 @@
+﻿@typeparam T
+
+<button class="btn btn-sm btn-success"
+        @onclick="@RunAsync"
+        disabled="@(Progress.HasValue)">
+    Process
+</button>
+
+<hr />
+@if (Progress.HasValue)
+{
+    <p>Processing @($"{Progress:0%}")...</p>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Func<T, Task> Job { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IList<T> Elements { get; set; } = default!;
+
+    internal double? Progress;
+
+    private async Task RunAsync()
+    {
+        var total = Elements.Count;
+        Progress = 0;
+        StateHasChanged();
+
+        for (int i = 0; i < total; i++)
+        {
+            Progress = 1.0 * (1 + i) / total;
+            StateHasChanged();
+
+            await Job.Invoke(Elements[i]);
+        }
+
+        Progress = null;
+    }
+}
