@@ -1,0 +1,11 @@
+﻿<confidential @onpreventcopy="@Log">
+    @ChildContent
+</confidential>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = default!;
+
+    private void Log(PreventedCopyEventArgs args)
+        => Console.WriteLine($"Prevented data leak at {args.TimestampUtc} UTC.");
+}

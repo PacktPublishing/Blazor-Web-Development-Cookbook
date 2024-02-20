@@ -1,0 +1,10 @@
+﻿@rendermode InteractiveWebAssembly
+
+<PreventCopy>
+
+    @foreach (var ticket in Data.Tickets.All)
+    {
+        <p>@ticket.Title</p>
+    }
+
+</PreventCopy>
