@@ -13,8 +13,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Chapters\Chapter04\" />
-  </ItemGroup>
-
 </Project>

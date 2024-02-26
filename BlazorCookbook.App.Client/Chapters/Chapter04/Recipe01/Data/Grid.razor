@@ -1,0 +1,19 @@
+﻿<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Tariff</td>
+            <td>Price</td>
+            <td>Availability</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Tickets.All)
+        {
+            <tr>
+                <td>@ticket.Tariff</td>
+                <td>@ticket.Price</td>
+                <td>@ticket.Availability</td>
+            </tr>
+        }
+    </tbody>
+</table>

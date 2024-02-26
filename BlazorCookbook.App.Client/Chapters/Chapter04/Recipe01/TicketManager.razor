@@ -1,0 +1,14 @@
+﻿@page "/ch04r01"
+
+<Grid Tickets="@Tickets.All" Context="ticket">
+    <Header>
+        <td>Tariff</td>
+        <td>Price</td>
+        <td>Availability</td>
+    </Header>
+    <Row>
+        <td>@ticket.Tariff</td>
+        <td>@ticket.Price</td>
+        <td>@ticket.Availability</td>
+    </Row>
+</Grid>

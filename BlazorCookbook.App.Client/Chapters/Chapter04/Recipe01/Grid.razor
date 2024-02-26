@@ -1,0 +1,22 @@
+﻿<table class="table table-bordered">
+    <thead>
+        <tr>@Header</tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Tickets)
+        {
+            <tr>@Row(ticket)</tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public IList<Ticket> Tickets { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<Ticket> Row { get; set; }
+}
