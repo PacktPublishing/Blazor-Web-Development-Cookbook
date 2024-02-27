@@ -1,11 +1,11 @@
 ﻿<table class="table table-bordered">
     <thead>
-        <tr>@Header</tr>
+        @Header
     </thead>
     <tbody>
         @foreach (var ticket in Tickets)
         {
-            <tr>@Row(ticket)</tr>
+            @Row(ticket)
         }
     </tbody>
 </table>
