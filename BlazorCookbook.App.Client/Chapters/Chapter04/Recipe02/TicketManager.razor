@@ -1,0 +1,31 @@
+﻿@page "/ch04r02"
+@rendermode InteractiveWebAssembly
+
+<Grid Tickets="@Tickets.All" Context="ticket">
+    <Header>
+        <ActiveTd OnClick="@(() => Sort("Tariff"))">
+            Tariff
+        </ActiveTd>
+        <ActiveTd OnClick="@(() => Sort("Price"))">
+            Price
+        </ActiveTd>
+        <ActiveTd OnClick="@(() => Sort("Stock"))">
+            Stock
+        </ActiveTd>
+    </Header>
+    <Row>
+        <ActiveTr OnClick="@(() => Show(ticket.Id))">
+            <td>@ticket.Tariff</td>
+            <td>@ticket.Price</td>
+            <td>@ticket.Availability</td>
+        </ActiveTr>
+    </Row>
+</Grid>
+
+@code {
+    private void Sort(object value)
+        => Console.WriteLine($"Sort by {value}!");
+
+    private void Show(object value)
+        => Console.WriteLine($"Show {value}!");
+}
