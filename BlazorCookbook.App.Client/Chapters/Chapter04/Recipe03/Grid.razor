@@ -1,0 +1,39 @@
+﻿<table class="table table-bordered">
+    <thead>
+        @Header
+    </thead>
+    <tbody>
+        @foreach (var ticket in Set)
+        {
+            @Row(ticket)
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<Paginator Getter="@LoadAsync" />
+
+@code {
+    [Parameter, EditorRequired]
+    public IList<Ticket> Tickets { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<Ticket> Row { get; set; }
+
+    protected IList<Ticket> Set = Array.Empty<Ticket>();
+
+    private Task LoadAsync(int page, int size)
+    {
+        Set = Tickets
+            .Skip((page - 1) * size)
+            .Take(size)
+            .ToList();
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

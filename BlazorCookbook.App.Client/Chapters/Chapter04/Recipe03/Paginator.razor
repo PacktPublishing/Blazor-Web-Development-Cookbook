@@ -1,0 +1,30 @@
+﻿<div class="d-flex">
+    <button @onclick="@PreviousPageAsync">Previous</button>
+    <input disabled value="@CurrentPage" />
+    <button @onclick="@NextPageAsync">Next</button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public Func<int, int, Task> Getter { get; set; }
+
+    protected int CurrentPage = 1, Size = 5;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+        => !firstRender ? Task.CompletedTask : ReloadAsync();
+
+    private Task NextPageAsync()
+    {
+        CurrentPage++;
+        return ReloadAsync();
+    }
+
+    private Task PreviousPageAsync()
+    {
+        CurrentPage--;
+        return ReloadAsync();
+    }
+
+    private Task ReloadAsync()
+        => Getter.Invoke(CurrentPage, Size);
+}

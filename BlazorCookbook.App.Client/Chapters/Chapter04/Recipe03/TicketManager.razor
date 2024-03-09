@@ -1,0 +1,19 @@
+﻿@page "/ch04r03"
+@rendermode InteractiveWebAssembly
+
+<Grid Tickets="@Tickets.LargeDataset" Context="ticket">
+    <Header>
+        <tr>
+            <td>Tariff</td>
+            <td>Price</td>
+            <td>Availability</td>
+        </tr>
+    </Header>
+    <Row>
+        <tr>
+            <td>@ticket.Tariff</td>
+            <td>@ticket.Price</td>
+            <td>@ticket.Availability</td>
+        </tr>
+    </Row>
+</Grid>
