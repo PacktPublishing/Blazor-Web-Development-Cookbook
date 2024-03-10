@@ -1,0 +1,14 @@
+﻿<td @onclick=@(() => Grid.SortAsync(Key))>
+    @ChildContent
+</td>
+
+@code {
+    [CascadingParameter]
+    public Grid Grid { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Key { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+}

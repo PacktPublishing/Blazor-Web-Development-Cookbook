@@ -1,0 +1,37 @@
+﻿<CascadingValue Value="@this">
+    <table class="table table-bordered">
+        <thead>
+            @Header
+        </thead>
+        <tbody>
+            @foreach (var ticket in Tickets)
+            {
+                @Row(ticket)
+            }
+        </tbody>
+    </table>
+</CascadingValue>
+
+<Sorter @ref="@Sorter" />
+
+@code {
+    [Parameter, EditorRequired]
+    public IList<Ticket> Tickets { get; set; }
+
+    [Parameter]
+    public EventCallback<IList<Ticket>> TicketsChanged { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<Ticket> Row { get; set; }
+
+    protected Sorter Sorter = default!;
+
+    public Task SortAsync(string by)
+    {
+        Tickets = Sorter.Sort(Tickets, by);
+        return TicketsChanged.InvokeAsync(Tickets);
+    }
+}

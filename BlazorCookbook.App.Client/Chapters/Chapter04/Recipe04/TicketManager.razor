@@ -1,0 +1,29 @@
+﻿@page "/ch04r04"
+@rendermode InteractiveWebAssembly
+
+<Grid @bind-Tickets="@Data" Context="ticket">
+    <Header>
+        <tr>
+            <SortableTd Key="@nameof(Ticket.Tariff)">
+                Tariff
+            </SortableTd>
+            <SortableTd Key="@nameof(Ticket.Price)">
+                Price
+            </SortableTd>
+            <SortableTd Key="@nameof(Ticket.Availability)">
+                Availability
+            </SortableTd>
+        </tr>
+    </Header>
+    <Row>
+        <tr>
+            <td>@ticket.Tariff</td>
+            <td>@ticket.Price</td>
+            <td>@ticket.Availability</td>
+        </tr>
+    </Row>
+</Grid>
+
+@code {
+    protected IList<Ticket> Data = Tickets.All;
+}

@@ -1,0 +1,17 @@
+﻿@code {
+    private string _sortBy = string.Empty;
+    private bool _isAsc;
+
+    public IList<T> Sort<T>(IList<T> data, string by)
+    {
+        _isAsc = by == _sortBy ? !_isAsc : true;
+        _sortBy = by;
+
+        return _isAsc ?
+            data.OrderBy(GetKey<T>()).ToList() :
+            data.OrderByDescending(GetKey<T>()).ToList();
+    }
+
+    private Func<T, object?> GetKey<T>()
+        => it => it?.GetType()?.GetProperty(_sortBy)?.GetValue(it, null);
+}

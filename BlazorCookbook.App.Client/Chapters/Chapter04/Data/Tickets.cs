@@ -23,7 +23,7 @@ internal static class Tickets
         new("Guardian", 0.00m),
         new("Disabled", 5.00m),
         new("Student", 10.00m),
-        new("Honorary", 0.00m)
+        new("Honorary", 1.00m)
     ];
 
     public static Ticket[] LargeDataset
