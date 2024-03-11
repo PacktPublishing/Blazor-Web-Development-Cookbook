@@ -8,10 +8,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.ConfigureRecipe03()
-                .ConfigureRecipe04()
-                .ConfigureRecipe06()
-                .AddApiClientForChapter03Recipe07();
+builder.Services.AddChapters();
 
 var app = builder.Build();
 

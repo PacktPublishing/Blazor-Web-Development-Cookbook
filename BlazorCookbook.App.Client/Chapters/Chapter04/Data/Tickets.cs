@@ -41,8 +41,18 @@ internal static class Tickets
             return [.. tickets];
         }
     }
-        
-        
-    
 
+    public class Service
+    {
+        private readonly IList<Ticket> _source = All;
+
+        public async Task<IList<Ticket>> GetAsync(int page, int size)
+        {
+            await Task.Delay(200);
+
+            return _source.Skip((page - 1) * size)
+                          .Take(size)
+                          .ToList();
+        }
+    }
 }
