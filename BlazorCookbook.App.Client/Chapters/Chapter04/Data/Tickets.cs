@@ -44,15 +44,18 @@ internal static class Tickets
 
     public class Service
     {
-        private readonly IList<Ticket> _source = All;
+        private readonly IList<Ticket> _source = LargeDataset;
 
-        public async Task<IList<Ticket>> GetAsync(int page, int size)
+        public async Task<(int, IList<Ticket>)> GetAsync(int from, int size,
+            CancellationToken cancellationToken)
         {
-            await Task.Delay(200);
+            await Task.Delay(200, cancellationToken);
 
-            return _source.Skip((page - 1) * size)
-                          .Take(size)
-                          .ToList();
+            var data = _source.Skip(from)
+                              .Take(size)
+                              .ToList();
+
+            return (_source.Count, data);
         }
     }
 }

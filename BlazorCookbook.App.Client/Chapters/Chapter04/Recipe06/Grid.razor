@@ -1,0 +1,32 @@
+﻿@typeparam T
+
+<table class="table table-bordered">
+    <thead>
+        @Header
+    </thead>
+    <tbody>
+        <Virtualize ItemsProvider="@LoadAsync">
+            @Row(context)
+        </Virtualize>
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public Func<int, int, CancellationToken, 
+        Task<(int, IList<T>)>> Provider { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<T> Row { get; set; }
+
+    private async ValueTask<ItemsProviderResult<T>> LoadAsync(ItemsProviderRequest request)
+    {
+        (var total, var data) = await Provider.Invoke(request.StartIndex, 
+            request.Count, request.CancellationToken);
+
+        return new(data, total);
+    }
+}
