@@ -1,11 +1,13 @@
-﻿<table class="table table-bordered">
+﻿@typeparam T
+
+<table class="table table-bordered">
     <thead>
         @Header
     </thead>
     <tbody>
-        @foreach (var ticket in Set)
+        @foreach (var element in Set)
         {
-            @Row(ticket)
+            @Row(element)
         }
     </tbody>
 </table>
@@ -16,22 +18,21 @@
 
 @code {
     [Parameter, EditorRequired]
-    public IList<Ticket> Tickets { get; set; }
+    public IList<T> Data { get; set; }
 
     [Parameter, EditorRequired]
     public RenderFragment Header { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment<Ticket> Row { get; set; }
+    public RenderFragment<T> Row { get; set; }
 
-    protected IList<Ticket> Set = Array.Empty<Ticket>();
+    protected IList<T> Set = Array.Empty<T>();
 
     private Task LoadAsync(int page, int size)
     {
-        Set = Tickets
-            .Skip((page - 1) * size)
-            .Take(size)
-            .ToList();
+        Set = Data.Skip((page - 1) * size)
+                  .Take(size)
+                  .ToList();
 
         StateHasChanged();
         return Task.CompletedTask;
