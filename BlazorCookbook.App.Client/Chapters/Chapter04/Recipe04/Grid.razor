@@ -1,12 +1,15 @@
-﻿<CascadingValue Value="@this">
+﻿@typeparam T
+@implements IGridActions
+
+<CascadingValue Value="@this">
     <table class="table table-bordered">
         <thead>
             @Header
         </thead>
         <tbody>
-            @foreach (var ticket in Tickets)
+            @foreach (var element in Data)
             {
-                @Row(ticket)
+                @Row(element)
             }
         </tbody>
     </table>
@@ -16,22 +19,22 @@
 
 @code {
     [Parameter, EditorRequired]
-    public IList<Ticket> Tickets { get; set; }
+    public IList<T> Data { get; set; }
 
     [Parameter]
-    public EventCallback<IList<Ticket>> TicketsChanged { get; set; }
+    public EventCallback<IList<T>> DataChanged { get; set; }
 
     [Parameter, EditorRequired]
     public RenderFragment Header { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment<Ticket> Row { get; set; }
+    public RenderFragment<T> Row { get; set; }
 
     protected Sorter Sorter = default!;
 
     public Task SortAsync(string by)
     {
-        Tickets = Sorter.Sort(Tickets, by);
-        return TicketsChanged.InvokeAsync(Tickets);
+        Data = Sorter.Sort(Data, by);
+        return DataChanged.InvokeAsync(Data);
     }
 }

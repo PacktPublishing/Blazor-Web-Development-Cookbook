@@ -2,16 +2,19 @@
     private string _sortBy = string.Empty;
     private bool _isAsc;
 
-    public IList<T> Sort<T>(IList<T> data, string by)
+    public IList<T> Sort<T>(IList<T> data, string property)
     {
-        _isAsc = by == _sortBy ? !_isAsc : true;
-        _sortBy = by;
+        _isAsc = property == _sortBy ? !_isAsc : true;
+        _sortBy = property;
+        var by = GetKey<T>();
 
         return _isAsc ?
-            data.OrderBy(GetKey<T>()).ToList() :
-            data.OrderByDescending(GetKey<T>()).ToList();
+            data.OrderBy(by).ToList() :
+            data.OrderByDescending(by).ToList();
     }
 
     private Func<T, object?> GetKey<T>()
-        => it => it?.GetType()?.GetProperty(_sortBy)?.GetValue(it, null);
+        => it => it?.GetType()?
+                    .GetProperty(_sortBy)?
+                    .GetValue(it, null);
 }
