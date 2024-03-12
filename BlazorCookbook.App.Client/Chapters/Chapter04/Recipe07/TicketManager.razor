@@ -1,6 +1,7 @@
-﻿@using Microsoft.AspNetCore.Components.QuickGrid
+﻿@page "/ch04r07"
+
+@using Microsoft.AspNetCore.Components.QuickGrid
 @rendermode InteractiveWebAssembly
-@page "/ch04r07"
 
 <QuickGrid Items="@Data"
            Pagination="@Pagination">
@@ -11,8 +12,6 @@
     <PropertyColumn Property="@(x => x.Price)"
                     Sortable="true"
                     Format="0.00" />
-
-    <PropertyColumn Property="@(x => x.Availability)" />
 
 </QuickGrid>
 
