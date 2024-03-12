@@ -1,20 +1,28 @@
 ﻿@page "/ch04r06"
-@rendermode InteractiveWebAssembly
-@inject Tickets.Service Service
 
-<Grid Provider="@Service.GetAsync">
-    <Header>
-        <tr>
-            <td>Id</td>
-            <td>Tariff</td>
-            <td>Price</td>
-        </tr>
-    </Header>
-    <Row>
-        <tr>
-            <td>@context.Id</td>
-            <td>@context.Tariff</td>
-            <td>@context.Price</td>
-        </tr>
-    </Row>
-</Grid>
+@using Microsoft.AspNetCore.Components.QuickGrid
+@rendermode InteractiveWebAssembly
+
+<QuickGrid Items="@Data"
+           Pagination="@Pagination">
+
+    <PropertyColumn Property="@(x => x.Tariff)"
+                    Sortable="true" />
+
+    <PropertyColumn Property="@(x => x.Price)"
+                    Sortable="true"
+                    Format="0.00" />
+
+</QuickGrid>
+
+<Paginator State="@Pagination" />
+
+@code {
+    protected IQueryable<Ticket> Data
+        = Tickets.LargeDataset.AsQueryable();
+
+    protected PaginationState Pagination = new()
+    {
+        ItemsPerPage = 5
+    };
+}
