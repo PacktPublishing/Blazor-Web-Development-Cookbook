@@ -1,7 +1,7 @@
 ﻿@page "/ch04r02"
 @rendermode InteractiveWebAssembly
 
-<Grid Tickets="@Tickets.All" Context="ticket">
+<Grid Data="@Tickets.All">
     <Header>
         <ActiveTd OnClick="@(() => Sort("Tariff"))">
             Tariff
@@ -9,15 +9,11 @@
         <ActiveTd OnClick="@(() => Sort("Price"))">
             Price
         </ActiveTd>
-        <ActiveTd OnClick="@(() => Sort("Stock"))">
-            Stock
-        </ActiveTd>
     </Header>
     <Row>
-        <ActiveTr OnClick="@(() => Show(ticket.Id))">
-            <td>@ticket.Tariff</td>
-            <td>@ticket.Price</td>
-            <td>@ticket.Availability</td>
+        <ActiveTr OnClick="@(() => Show(context.Id))">
+            <td>@context.Tariff</td>
+            <td>@context.Price</td>
         </ActiveTr>
     </Row>
 </Grid>
