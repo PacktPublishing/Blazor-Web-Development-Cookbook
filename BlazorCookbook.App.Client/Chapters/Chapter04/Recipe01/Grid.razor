@@ -1,22 +1,24 @@
-﻿<table class="table table-bordered">
+﻿@typeparam T
+
+<table class="table table-bordered">
     <thead>
         @Header
     </thead>
     <tbody>
-        @foreach (var ticket in Tickets)
+        @foreach (var element in Data)
         {
-            @Row(ticket)
+            @Row(element)
         }
     </tbody>
 </table>
 
 @code {
     [Parameter, EditorRequired]
-    public IList<Ticket> Tickets { get; set; }
+    public IList<T> Data { get; set; }
 
     [Parameter, EditorRequired]
     public RenderFragment Header { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment<Ticket> Row { get; set; }
+    public RenderFragment<T> Row { get; set; }
 }

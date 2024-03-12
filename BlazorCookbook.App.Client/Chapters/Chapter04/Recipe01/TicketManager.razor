@@ -1,18 +1,16 @@
 ﻿@page "/ch04r01"
 
-<Grid Tickets="@Tickets.All" Context="ticket">
+<Grid Data="@Tickets.All">
     <Header>
         <tr>
             <td>Tariff</td>
             <td>Price</td>
-            <td>Availability</td>
         </tr>
     </Header>
     <Row>
         <tr>
-            <td>@ticket.Tariff</td>
-            <td>@ticket.Price</td>
-            <td>@ticket.Availability</td>
+            <td>@context.Tariff</td>
+            <td>@context.Price</td>
         </tr>
     </Row>
 </Grid>
