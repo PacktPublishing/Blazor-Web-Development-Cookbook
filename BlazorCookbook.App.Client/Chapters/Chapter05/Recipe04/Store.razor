@@ -1,0 +1,15 @@
+﻿@page "/ch05r04"
+@rendermode InteractiveWebAssembly
+
+<Overlay />
+
+<button @onclick="@SyncAsync">
+    Synchronize data
+</button>
+
+@code {
+    [Inject] private Api Api { get; init; }
+
+    private Task SyncAsync()
+        => OverlayState.ExecuteAsync(() => Api.SynchronizeAsync(default));
+}

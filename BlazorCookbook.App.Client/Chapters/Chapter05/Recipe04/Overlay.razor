@@ -1,0 +1,21 @@
+﻿@implements IDisposable
+
+<overlay class="@(IsVisible ? "visible" : "")">
+    Loading...
+</overlay>
+
+@code {
+    protected bool IsVisible;
+
+    public Task ReactAsync(bool isVisible)
+    {
+        IsVisible = isVisible;
+        return InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+        => OverlayState.OnChanged += ReactAsync;
+
+    public void Dispose()
+        => OverlayState.OnChanged -= ReactAsync;
+}

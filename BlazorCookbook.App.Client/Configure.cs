@@ -1,6 +1,7 @@
 ﻿using BlazorCookbook.App.Client.Chapters.Chapter02.Data;
 using BlazorCookbook.App.Client.Chapters.Chapter03.Data;
 using BlazorCookbook.App.Client.Chapters.Chapter04.Data;
+using BlazorCookbook.App.Client.Chapters.Chapter05.Data;
 
 namespace BlazorCookbook.App.Client;
 
@@ -10,7 +11,8 @@ public static class Configure
     {
         services.AddChapter02()
                 .AddChapter03()
-                .AddChapter04();
+                .AddChapter04()
+                .AddChapter05();
 
         return services;
     }

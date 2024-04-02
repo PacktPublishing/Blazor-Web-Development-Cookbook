@@ -8,7 +8,7 @@ internal static class ChaptersContainer
         { 2, 6 },
         { 3, 7 },
         { 4, 7 },
-        { 5, 8 },
+        { 5, 7 },
         { 6, 0 },
         { 7, 0 },
         { 8, 0 },

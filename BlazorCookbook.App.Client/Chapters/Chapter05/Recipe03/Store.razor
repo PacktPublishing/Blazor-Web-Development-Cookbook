@@ -1,0 +1,30 @@
+﻿@page "/ch05r03"
+@rendermode Config.PrerenderDisabled
+@implements IDisposable
+
+<button @onclick="@(() => State.Notify(new SuccessArgs()))">
+    Buy!
+</button>
+
+<button @onclick="@(() => State.Notify(new FailureArgs()))">
+    Buy!
+</button>
+
+<p>@Message</p>
+
+@code {
+    [Inject] private StoreState State { get; init; }
+    protected string Message = string.Empty;
+
+    protected override void OnInitialized()
+        => State.OnChanged += ReactAsync;
+
+    public void Dispose()
+        => State.OnChanged -= ReactAsync;
+
+    private Task ReactAsync(StateArgs args)
+    {
+        Message = args is SuccessArgs ? "Success" : "Failure";
+        return InvokeAsync(StateHasChanged);
+    }
+}
