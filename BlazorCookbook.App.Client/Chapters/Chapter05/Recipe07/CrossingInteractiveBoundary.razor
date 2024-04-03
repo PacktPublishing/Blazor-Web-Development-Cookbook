@@ -1,0 +1,38 @@
+﻿@using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe06
+@implements IAsyncDisposable
+@typeparam T
+
+@code {
+    private const string _key = "state";
+    [Inject] private BrowserStorage Storage { get; init; }
+    [CascadingParameter] public T State { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var value = new SessionStorageValue<T>
+        {
+            Key = $"{_key}_{State.GetType()}"
+        };
+
+        try
+        {
+            State = await Storage.ResolveAsync(value);
+            StateHasChanged();
+        }
+        catch { }
+        
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        var value = new SessionStorageValue<T>
+        {
+            Key = $"{_key}_{State.GetType()}",
+            Value = State
+        };
+
+        return Storage.PersistAsync(value);
+    }
+}

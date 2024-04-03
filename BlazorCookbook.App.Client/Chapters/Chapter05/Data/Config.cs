@@ -1,7 +1,7 @@
 ﻿using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe02;
 using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe03;
 using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe04;
-using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe06;
+using BlazorCookbook.App.Client.Chapters.Chapter05.Recipe07;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -24,7 +24,8 @@ public static class Config
                 .AddRecipe03()
                 .AddRecipe04()
                 .AddRecipe05()
-                .AddRecipe06();
+                .AddRecipe06()
+                .AddRecipe07();
 
         return services;
     }
@@ -43,4 +44,10 @@ public static class Config
 
     private static IServiceCollection AddRecipe06(this IServiceCollection services)
         => services.AddTransient<Recipe06.BrowserStorage>();
+
+    private static IServiceCollection AddRecipe07(this IServiceCollection services)
+    {
+        services.AddCascadingValue(it => CartState.Empty);
+        return services;
+    }
 }
