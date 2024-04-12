@@ -2,7 +2,7 @@
     <div class="name">@Tariff</div>
     <div class="price">@(Price.ToString("0.00 $"))</div>
     <div class="ticket-actions">
-        <button @onclick="@AddToCart">
+        <button @onclick="@Add">
             Add to cart
         </button>
     </div>
@@ -19,6 +19,5 @@
     [Parameter, EditorRequired]
     public decimal Price { get; set; }
 
-    public void AddToCart()
-        => Cart.Add(Tariff, Price);
+    public void Add() => Cart.Add(Tariff, Price);
 }

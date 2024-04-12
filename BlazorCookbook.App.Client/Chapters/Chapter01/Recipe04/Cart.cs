@@ -2,8 +2,6 @@
 
 public class Cart(Action onStateHasChanged)
 {
-    private readonly Action _onStateHasChanged = onStateHasChanged;
-
     public List<string> Content { get; init; } = [];
     public decimal Value { get; private set; }
 
@@ -12,6 +10,6 @@ public class Cart(Action onStateHasChanged)
     {
         Content.Add(tariff);
         Value += price;
-        _onStateHasChanged.Invoke();
+        onStateHasChanged.Invoke();
     }
 }
