@@ -1,4 +1,10 @@
-﻿@page "/ch01r03"
+﻿@page "/ch01r02"
+@rendermode InteractiveWebAssembly
 
 <Ticket Tariff="Adult" Price="10.00m" />
-<Ticket Tariff="Child" Price="5.00m" />
+<Ticket Tariff="Child" />
+
+@code {
+    private void Add()
+        => Console.WriteLine("Added to cart!");
+}
