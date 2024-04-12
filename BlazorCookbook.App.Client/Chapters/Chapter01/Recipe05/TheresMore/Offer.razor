@@ -1,18 +1,19 @@
 ﻿@* @page "/ch01r05" *@
+@using BlazorCookbook.App.Client.Chapters.Chapter01.Data
 @rendermode InteractiveWebAssembly
 
-<Ticket>
+<BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05.TheresMore.Ticket>
     <Details>
-        @Data.Adult.Tariff (@Data.Adult.Price)
+        @Samples.Adult.Tariff (@Samples.Adult.Price)
     </Details>
     <Actions>
-        <button @onclick="@(() => AddToCart(Data.Adult.Id))">
+        <button @onclick="@(() => Add(Samples.Adult.Id))">
             Add to cart
         </button>
     </Actions>
-</Ticket>
+</BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05.TheresMore.Ticket>
 
 @code {
-    public void AddToCart(Guid Id)
-        => Console.WriteLine($"Ticket {Id} added to cart!");
+    public void Add(Guid Id)
+        => Console.WriteLine($"Ticket {Id} added!");
 }

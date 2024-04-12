@@ -1,6 +1,6 @@
-﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05.Models;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Data;
 
-public static class Data
+public static class Samples
 {
     public static readonly TicketViewModel
         Adult = new("Adult", 10.00m),

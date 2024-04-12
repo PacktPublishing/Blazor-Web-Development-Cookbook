@@ -1,4 +1,4 @@
-﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05.Models;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Data;
 
 public record TicketViewModel
 {
@@ -13,7 +13,7 @@ public record TicketViewModel
         Id = Guid.NewGuid();
         Tariff = tariff;
 
-        Price = price > 0 ? 
+        Price = price > 0 ?
                 price.ToString("0.00 $")
                 : string.Empty;
     }

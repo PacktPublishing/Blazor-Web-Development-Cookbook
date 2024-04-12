@@ -1,11 +1,7 @@
 <div class="ticket">
-    <div class="ticket-info">
-        @ChildContent
-    </div>
+    <div class="ticket-info">@ChildContent</div>
     <div class="ticket-actions">
-        <button @onclick="@AddToCart">
-            Add to cart
-        </button>
+        <button @onclick="@Add">Add to cart</button>
     </div>
 </div>
 
@@ -16,6 +12,6 @@
     [Parameter, EditorRequired]
     public RenderFragment ChildContent { get; set; }
 
-    public void AddToCart()
-        => Console.WriteLine($"Ticket {Id} added to cart!");
+    public void Add()
+        => Console.WriteLine($"Ticket {Id} added!");
 }
