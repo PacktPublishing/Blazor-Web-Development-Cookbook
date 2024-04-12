@@ -1,7 +1,8 @@
 ﻿@page "/ch01r07"
+@using BlazorCookbook.App.Client.Chapters.Chapter01.Data
 @rendermode InteractiveWebAssembly
 
-<Grid Data="@Data.Tickets" Context="ticket">
+<Grid Data="@Samples.Tickets" Context="ticket">
     <Header>
         <tr>
             <td>Ticket code</td>
@@ -15,7 +16,7 @@
             <td>@ticket.Id</td>
             <td>@ticket.Tariff</td>
             <td>@ticket.Price</td>
-            <td @onclick="() => AddToCart(ticket)">
+            <td @onclick="() => Add(ticket)">
                 Add to Cart
             </td>
         </tr>
@@ -31,7 +32,7 @@
     protected Type AlertType;
     protected Dictionary<string, object> AlertParams;
 
-    public void AddToCart(TicketViewModel ticket)
+    public void Add(TicketViewModel ticket)
     {
         AlertType = ticket.AvailableSeats == 0 ?
             typeof(Alerts.SoldOut) :
