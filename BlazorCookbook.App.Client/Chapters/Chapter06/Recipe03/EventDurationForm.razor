@@ -1,0 +1,9 @@
+﻿@using BlazorCookbook.App.Client.Chapters.Chapter06.Data
+@inherits Editor<EventPeriod>
+
+<label>
+    From: <InputDate @bind-Value="@Value.Start" />
+</label>
+<label>
+    To: <InputDate @bind-Value="@Value.End" />
+</label>

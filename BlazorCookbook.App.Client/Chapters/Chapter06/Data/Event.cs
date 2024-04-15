@@ -4,6 +4,5 @@ public record Event
 {
     public Guid Id { get; init; }
     public string Name { get; set; }
-    public string Location { get; set; }
-    public EventPeriod Period { get; set; }
+    public EventPeriod Period { get; set; } = new();
 }
