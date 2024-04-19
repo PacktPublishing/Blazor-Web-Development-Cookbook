@@ -1,0 +1,25 @@
+﻿@page "/ch06r05"
+@rendermode InteractiveWebAssembly
+
+<EditForm FormName="coverUpload" Model="@Model"
+          OnSubmit="@SaveAsync">
+
+    <p><InputFile OnChange="FileChanged" /></p>
+    <p><button type="submit">Save</button></p>
+
+</EditForm>
+
+@code {
+    [Inject] private FileStorage Storage { get; init; }
+
+    public EventCover Model = new();
+
+    private void FileChanged(InputFileChangeEventArgs e)
+        => Model.File = e.File;
+
+    private Task SaveAsync()
+    {
+        using var stream = Model.File.OpenReadStream();
+        return Storage.UploadAsync(stream);
+    }
+}
