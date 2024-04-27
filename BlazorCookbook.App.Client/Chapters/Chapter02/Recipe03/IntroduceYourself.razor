@@ -1,17 +1,16 @@
 @page "/ch02r03"
+@using BlazorCookbook.App.Client.Chapters.Chapter02.Data
 @rendermode InteractiveWebAssembly
 
 <h3>What's your name?</h3>
 
-<input class="form-control w-50"
-       @bind=@User
+<input class="form-control w-50" @bind="@User"
        @bind:event="oninput"
        @bind:after="@AutocompleteAsync" />
 
 <hr />
 
-@if (!Suggestions.Any())
-    return;
+@if (!Suggestions.Any()) return;
 
 <h5>Did you mean?</h5>
 @foreach (var name in Suggestions)
@@ -23,14 +22,12 @@
     protected string User = string.Empty;
 
     [Inject] private SuggestionsApi Api { get; init; }
-    protected IList<string> Suggestions = Array.Empty<string>();
+    protected IList<string> Suggestions = [];
 
     private async Task AutocompleteAsync()
     {
-        Suggestions = 
-            string.IsNullOrWhiteSpace(User) ?
-            Array.Empty<string>() :
-            await Api.FindAsync(User);
+        Suggestions = string.IsNullOrWhiteSpace(User) ?
+            [] : await Api.FindAsync(User);
 
         await InvokeAsync(StateHasChanged);
     }

@@ -3,8 +3,7 @@
 
 <h3>What's your name?</h3>
 
-<input class="form-control w-50"
-       @bind=@User
+<input class="form-control w-50" @bind="@User"
        @bind:event="oninput"
        @onfocusout="@SayHello" />
 
@@ -27,10 +26,9 @@
 
     private bool IsGreetingReady
         => !string.IsNullOrWhiteSpace(Greeting);
-
     private bool IsUserFilled
         => !string.IsNullOrWhiteSpace(User);
 
     private void SayHello()
-        => Greeting = $"Hello {User}!";
+        => Greeting = $"Hello {User}";
 }

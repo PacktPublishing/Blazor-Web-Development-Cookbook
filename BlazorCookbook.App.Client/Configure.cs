@@ -1,4 +1,4 @@
-﻿using BlazorCookbook.App.Client.Chapters.Chapter02.Data;
+﻿using BlazorCookbook.App.Client.Chapters.Chapter02;
 using BlazorCookbook.App.Client.Chapters.Chapter03.Data;
 using BlazorCookbook.App.Client.Chapters.Chapter04.Data;
 using BlazorCookbook.App.Client.Chapters.Chapter05.Data;

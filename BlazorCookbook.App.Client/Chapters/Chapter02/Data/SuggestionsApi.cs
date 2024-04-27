@@ -1,4 +1,4 @@
-﻿namespace BlazorCookbook.App.Client.Chapters.Chapter02.Recipe03.Data;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter02.Data;
 
 internal sealed class SuggestionsApi
 {

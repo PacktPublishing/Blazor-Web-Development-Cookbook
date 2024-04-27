@@ -1,18 +1,17 @@
 @page "/ch02r06"
+@using BlazorCookbook.App.Client.Chapters.Chapter02.Data
 @rendermode InteractiveWebAssembly
-@inherits OwningComponentBase
+@implements IDisposable
 
 <h3>What's your name?</h3>
 
-<input class="form-control w-50"
-       @bind=@User
+<input class="form-control w-50" @bind=@User
        @bind:event="oninput"
        @bind:after="@OnUserInput" />
 
 <hr />
 
-@if (!Suggestions.Any())
-    return;
+@if (!Suggestions.Any()) return;
 
 <h5>Did you mean?</h5>
 @foreach (var name in Suggestions)
@@ -24,42 +23,28 @@
     protected string User = string.Empty;
 
     [Inject] private SuggestionsApi Api { get; init; }
-    protected IList<string> Suggestions = Array.Empty<string>();
-
-    private readonly TimeSpan
-        _throttle = TimeSpan.FromMilliseconds(300),
-        _timeout = TimeSpan.FromMinutes(1);
-
-    private Timer _debounceTimer;
-
-    private void OnUserInput()
-    {
-        _debounceTimer?.Dispose();
-
-        _debounceTimer = new Timer(
-            _ => InvokeAsync(AutocompleteAsync),
-            null,
-            _throttle,
-            _timeout);
-    }
+    protected IList<string> Suggestions = [];
 
     private async Task AutocompleteAsync()
     {
-        Suggestions = 
-            string.IsNullOrWhiteSpace(User) ?
-            Array.Empty<string>() :
-            await Api.FindAsync(User);
+        Suggestions = string.IsNullOrWhiteSpace(User) ?
+            [] : await Api.FindAsync(User);
 
         await InvokeAsync(StateHasChanged);
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _debounceTimer?.Dispose();
-        }
+    private Timer _debounceTimer;
+    private readonly TimeSpan
+        _throttle = TimeSpan.FromMilliseconds(500),
+        _timeout = TimeSpan.FromMinutes(1);
 
-        base.Dispose(disposing);
+    private void OnUserInput()
+    {
+        _debounceTimer?.Dispose();
+        _debounceTimer = new Timer(
+            _ => InvokeAsync(AutocompleteAsync),
+            null, _throttle, _timeout);
     }
+
+    public void Dispose() => _debounceTimer?.Dispose();
 }

@@ -1,7 +1,14 @@
-﻿namespace BlazorCookbook.App.Client.Chapters.Chapter02.Recipe03.Data;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter02.Data;
 
 internal sealed class DataSeed
 {
+    public static readonly IList<SkillLevel> SkillLevels = [
+        new(1, "Basic"),
+        new(2, "Intermediate"),
+        new(3, "Advanced"),
+        new(4, "Expert")
+    ];
+
     public readonly string[] Names = [
         "Mary",
         "Patricia",

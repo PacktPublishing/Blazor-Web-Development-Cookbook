@@ -3,11 +3,9 @@
 
 <h3>What's your name?</h3>
 
-<input class="form-control w-50"
-       @bind=@User />
+<input class="form-control w-50" @bind="@User" />
 
-@if (string.IsNullOrWhiteSpace(User))
-    return;
+@if (string.IsNullOrWhiteSpace(User)) return;
 
 <hr />
 <h1>Hello @User!</h1>
