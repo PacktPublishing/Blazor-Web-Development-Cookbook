@@ -1,5 +1,4 @@
-﻿@page "/ch07r01"
-@implements IDisposable
+﻿@page "/ch07r02"
 
 <EditForm EditContext="@Context" FormName="forEvent"
           OnValidSubmit="@Save">
@@ -10,6 +9,7 @@
         <ValidationMessage For="() => Model.Name" />
     </div>
     <button type="submit">Save</button>
+    <DataAnnotationsValidator />
 </EditForm>
 
 @code {
@@ -22,24 +22,10 @@
     private void Save()
         => Console.WriteLine($"Saved {Model.Name}.");
 
-    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
-    {
-        Store.Clear();
-        if (string.IsNullOrWhiteSpace(Model.Name))
-            Store.Add(() => Model.Name, "You must provide name.");
-    }
-
     protected override void OnInitialized()
     {
         Model ??= new();
         Context = new(Model);
-        Context.OnValidationRequested += ValidateForm;
         Store = new(Context);
-    }
-
-    public void Dispose()
-    {
-        if (Context is not null)
-            Context.OnValidationRequested -= ValidateForm;
     }
 }
