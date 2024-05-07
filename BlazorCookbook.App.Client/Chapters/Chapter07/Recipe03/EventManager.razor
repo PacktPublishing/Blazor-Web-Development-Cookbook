@@ -2,12 +2,8 @@
 
 <EditForm EditContext="@Context" FormName="forEvent"
           OnValidSubmit="@Save">
-    <div>
-        Name: <InputText @bind-Value="@Model.Name" />
-    </div>
-    <div>
-        <ValidationMessage For="() => Model.Name" />
-    </div>
+    <p>Name: <InputText @bind-Value="@Model.Name" /></p>
+    <p><ValidationMessage For="() => Model.Name" /></p>
     <button type="submit">Save</button>
     <DataAnnotationsValidator />
 </EditForm>
