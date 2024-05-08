@@ -1,0 +1,61 @@
+﻿@page "/ch07r06"
+@rendermode InteractiveWebAssembly
+@implements IDisposable
+
+<EditForm EditContext="@Context" FormName="forEvent"
+          OnValidSubmit="@Save">
+    <p>Name: <InputText @bind-Value="@Model.Name" /></p>
+    <p>
+        Venue: <InputText @bind-Value="@Model.Location.Venue" />
+    </p>
+    <p>
+        Capacity: <InputNumber @bind-Value="@Model.Location.Capacity" />
+    </p>
+    <p><ValidationSummary  /></p>
+    <button type="submit" disabled="@(!IsSubmittable)">
+        Save
+    </button>
+    <ObjectGraphDataAnnotationsValidator />
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Event Model { get; set; }
+
+    protected EditContext Context;
+    protected ValidationMessageStore Store;
+    protected bool IsSubmittable;
+
+    private void Save()
+        => Console.WriteLine($"Saved {Model.Name}.");
+
+    protected override void OnInitialized()
+    {
+        Model ??= new()
+        {
+            Name = "Packt Party",
+            Location = new()
+            {
+                Venue = "Packt Room",
+                Capacity = 150
+            }
+        };
+
+        Context = new(Model);
+        Store = new(Context);
+
+        Context.SetFieldCssClassProvider(
+            new TypeValidationClassProvider());
+
+        Context.OnFieldChanged += FieldChanged;
+    }
+
+    private void FieldChanged(object sender, FieldChangedEventArgs args)
+    {
+        IsSubmittable = Context.Validate() && Context.IsModified();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+        => Context.OnFieldChanged -= FieldChanged;
+}
