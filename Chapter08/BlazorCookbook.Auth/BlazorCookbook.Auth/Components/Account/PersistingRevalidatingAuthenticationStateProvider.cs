@@ -88,15 +88,14 @@ namespace BlazorCookbook.Auth.Components.Account
             {
                 var userId = principal.FindFirst(options.ClaimsIdentity.UserIdClaimType)?.Value;
                 var email = principal.FindFirst(options.ClaimsIdentity.EmailClaimType)?.Value;
+                var role = principal.FindFirst(options.ClaimsIdentity.RoleClaimType)?.Value;
 
-                if (userId != null && email != null)
+                state.PersistAsJson(nameof(UserInfo), new UserInfo
                 {
-                    state.PersistAsJson(nameof(UserInfo), new UserInfo
-                    {
-                        UserId = userId,
-                        Email = email,
-                    });
-                }
+                    UserId = userId,
+                    Email = email,
+                    Role = role
+                });
             }
         }
 

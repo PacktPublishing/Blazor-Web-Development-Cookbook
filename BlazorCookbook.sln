@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherChapters", "OtherChapt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter08", "Chapter08", "{4410E577-5A76-483D-8531-C44EC2A3B9C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCookbook.Auth", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth\BlazorCookbook.Auth.csproj", "{67B08E58-3FF1-4E7C-B771-901B0CD41211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth\BlazorCookbook.Auth.csproj", "{67B08E58-3FF1-4E7C-B771-901B0CD41211}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCookbook.Auth.Client", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth.Client\BlazorCookbook.Auth.Client.csproj", "{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth.Client", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth.Client\BlazorCookbook.Auth.Client.csproj", "{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
