@@ -1,0 +1,51 @@
+﻿@page "/ch08r05"
+@rendermode InteractiveWebAssembly
+
+<h3>Store settings</h3>
+<p>
+    <button @onclick=@GoToTicketsAsync>
+        Support tickets
+    </button>
+</p>
+<AuthorizeView Roles="Support,Admin">
+    <p>You're authorized to see store settings.</p>
+</AuthorizeView>
+<AuthorizeView Roles="Admin">
+    <p><button>Shutdown</button></p>
+</AuthorizeView>
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; }
+    [Inject] private NavigationManager Navigation { get; init; }
+
+    private async Task GoToTicketsAsync()
+    {
+        var user = (await AuthState).User;
+
+        if (user.Identity is null)
+        {
+            Navigation.NavigateTo("/Account/Login");
+            return;
+        }
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/Account/Login");
+            return;
+        }
+
+        if (!user.Identity.Name.EndsWith("@packt.com"))
+        {
+            Navigation.NavigateTo("/tickets");
+            return;
+        }
+
+        if (user.IsInRole("Support") || user.IsInRole("Admin"))
+        {
+            Navigation.NavigateTo("/tickets/admin");
+            return;
+        }
+
+        Navigation.NavigateTo("/tickets/denied");
+    }
+}
