@@ -1,0 +1,64 @@
+﻿@page "/ch08r06"
+@attribute [Authorize]
+
+@using BlazorCookbook.Auth.Components.Account
+@using BlazorCookbook.Auth.Components.Account.Shared
+@using BlazorCookbook.Auth.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+
+<StatusMessage />
+<EditForm FormName="account-details"
+          OnValidSubmit="@SaveAsync"
+          Model="@Input">
+
+    <p>Email <input disabled type="text" value="@Input.Email" /></p>
+    <p>First Name <InputText @bind-Value="@Input.FirstName" /></p>
+    <p>Last Name <InputText @bind-Value="@Input.LastName" /></p>
+    <button type="submit">Save</button>
+
+</EditForm>
+
+@code {
+    
+    private sealed record InputModel
+    {
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    [Inject] private IdentityUserAccessor UserAccessor { get; set; }
+    [Inject] private UserManager<ApplicationUser> UserManager { get; set; }
+    [Inject] private SignInManager<ApplicationUser> SignInManager { get; set; }
+    [Inject] private IdentityRedirectManager Navigation { get; set; }
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; }
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    private ApplicationUser _user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await UserAccessor
+                      .GetRequiredUserAsync(HttpContext);
+
+        Input ??= new();
+        Input.Email ??= _user.Email;
+        Input.FirstName ??= _user.FirstName;
+        Input.LastName ??= _user.LastName;
+    }
+
+    private async Task SaveAsync()
+    {
+        _user.FirstName = Input.FirstName;
+        _user.LastName = Input.LastName;
+        await UserManager.UpdateAsync(_user);
+        await SignInManager.RefreshSignInAsync(_user);
+        Navigation.RedirectToCurrentPageWithStatus(
+            "Your profile has been updated", 
+            HttpContext);
+    }
+}
