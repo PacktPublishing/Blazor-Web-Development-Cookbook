@@ -1,18 +1,12 @@
-﻿@page "/ch08r05"
+﻿@page "/ch08r07"
 @rendermode InteractiveServer
 
-<h3>Store settings</h3>
+<h3>Settings</h3>
 <p>
     <button @onclick=@GoToTicketsAsync>
         Support tickets
     </button>
 </p>
-<AuthorizeView Roles="Support,Admin">
-    <p>You're authorized to see store settings.</p>
-</AuthorizeView>
-<AuthorizeView Roles="Admin">
-    <p><button>Shutdown</button></p>
-</AuthorizeView>
 
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; }

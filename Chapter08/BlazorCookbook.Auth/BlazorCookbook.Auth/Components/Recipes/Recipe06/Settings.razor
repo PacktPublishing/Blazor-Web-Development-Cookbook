@@ -1,0 +1,71 @@
+﻿@page "/ch08r06"
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Policy = "InternalEmployee")]
+
+@using BlazorCookbook.Auth.Components.Account
+@using BlazorCookbook.Auth.Components.Account.Shared
+@using Microsoft.AspNetCore.Identity
+@using BlazorCookbook.Auth.Data
+
+<h3>Settings</h3>
+<AuthorizeView Context="user" Roles="Support,Admin">
+    <ChildContent Context="auth">
+        <StatusMessage />
+        <EditForm FormName="creator"
+                  OnValidSubmit="@SaveAsync"
+                  Model="@Input">
+
+            <p>First Name <InputText @bind-Value="@Input.FirstName" /></p>
+            <p>Last Name <InputText @bind-Value="@Input.LastName" /></p>
+            <p><button type="submit">Save</button></p>
+        
+        </EditForm>
+    </ChildContent>
+</AuthorizeView>
+<AuthorizeView Roles="Admin">
+    <p><button>Shutdown the app</button></p>
+</AuthorizeView>
+
+@code {
+
+    private sealed record InputModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    [Inject] private IdentityUserAccessor UserAccessor { get; set; }
+    [Inject] private UserManager<ApplicationUser> UserManager { get; set; }
+    [Inject] private SignInManager<ApplicationUser> SignInManager { get; set; }
+    [Inject] private IdentityRedirectManager Navigation { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; }
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+    protected override void OnInitialized()
+        => Input ??= new();
+
+    private ApplicationUser _user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await UserAccessor
+            .GetRequiredUserAsync(HttpContext);
+        Input.FirstName ??= _user.FirstName;
+        Input.LastName ??= _user.LastName;
+    }
+
+    private async Task SaveAsync()
+    {
+        _user.FirstName = Input.FirstName;
+        _user.LastName = Input.LastName;
+        await UserManager.UpdateAsync(_user);
+        await SignInManager.RefreshSignInAsync(_user);
+
+        Navigation.RedirectToCurrentPageWithStatus(
+            "Your profile has been updated",
+            HttpContext);
+    }
+}

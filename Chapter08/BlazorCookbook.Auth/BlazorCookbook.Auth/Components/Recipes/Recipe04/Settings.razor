@@ -1,0 +1,45 @@
+﻿@page "/ch08r04"
+
+@using BlazorCookbook.Auth.Components.Account
+@using BlazorCookbook.Auth.Components.Account.Shared
+@using Microsoft.AspNetCore.Identity
+
+<h3>Settings</h3>
+<AuthorizeView Context="auth">
+    <StatusMessage />
+    <EditForm FormName="creator"
+              OnValidSubmit="@SaveAsync"
+              Model="@Input">
+
+        <p>Name <InputText @bind-Value="@Input.RoleName" /></p>
+        <p><button type="submit">Save</button></p>
+
+    </EditForm>
+</AuthorizeView>
+
+@code {
+    private sealed record InputModel
+    {
+        public string RoleName { get; set; }
+    }
+
+    [Inject] private RoleManager<IdentityRole> RoleManager { get; set; }
+    [Inject] private IdentityRedirectManager Navigation { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; }
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+    protected override void OnInitialized()
+        => Input ??= new();
+
+    private async Task SaveAsync()
+    {
+        var role = new IdentityRole(Input.RoleName);
+        await RoleManager.CreateAsync(role);
+
+        Navigation.RedirectToCurrentPageWithStatus(
+            $"'{role.Name}' role has been created", 
+            HttpContext);
+    }
+}

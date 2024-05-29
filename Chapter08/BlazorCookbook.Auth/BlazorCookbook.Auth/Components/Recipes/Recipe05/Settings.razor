@@ -1,29 +1,28 @@
-﻿@page "/ch08r06"
-@attribute [Authorize]
+﻿@page "/ch08r05"
 
 @using BlazorCookbook.Auth.Components.Account
 @using BlazorCookbook.Auth.Components.Account.Shared
-@using BlazorCookbook.Auth.Data
-@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
+@using BlazorCookbook.Auth.Data
 
-<StatusMessage />
-<EditForm FormName="account-details"
-          OnValidSubmit="@SaveAsync"
-          Model="@Input">
+<h3>Settings</h3>
+<AuthorizeView Context="auth">
+    <StatusMessage />
+    <EditForm FormName="creator"
+              OnValidSubmit="@SaveAsync"
+              Model="@Input">
 
-    <p>Email <input disabled type="text" value="@Input.Email" /></p>
-    <p>First Name <InputText @bind-Value="@Input.FirstName" /></p>
-    <p>Last Name <InputText @bind-Value="@Input.LastName" /></p>
-    <button type="submit">Save</button>
+        <p>First Name <InputText @bind-Value="@Input.FirstName" /></p>
+        <p>Last Name <InputText @bind-Value="@Input.LastName" /></p>
+        <p><button type="submit">Save</button></p>
 
-</EditForm>
+    </EditForm>
+</AuthorizeView>
 
 @code {
     
     private sealed record InputModel
     {
-        public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
@@ -33,20 +32,19 @@
     [Inject] private SignInManager<ApplicationUser> SignInManager { get; set; }
     [Inject] private IdentityRedirectManager Navigation { get; set; }
 
-    [CascadingParameter]
-    private HttpContext HttpContext { get; set; }
+    [CascadingParameter] private HttpContext HttpContext { get; set; }
+
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
+    protected override void OnInitialized()
+        => Input ??= new();
 
     private ApplicationUser _user;
 
     protected override async Task OnInitializedAsync()
     {
         _user = await UserAccessor
-                      .GetRequiredUserAsync(HttpContext);
-
-        Input ??= new();
-        Input.Email ??= _user.Email;
+            .GetRequiredUserAsync(HttpContext);
         Input.FirstName ??= _user.FirstName;
         Input.LastName ??= _user.LastName;
     }
@@ -57,6 +55,7 @@
         _user.LastName = Input.LastName;
         await UserManager.UpdateAsync(_user);
         await SignInManager.RefreshSignInAsync(_user);
+
         Navigation.RedirectToCurrentPageWithStatus(
             "Your profile has been updated", 
             HttpContext);
