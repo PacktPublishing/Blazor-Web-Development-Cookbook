@@ -8,7 +8,7 @@ public sealed record Ticket
 
     public decimal Price { get; set; }
 
-    public int Availability { get; set; }
+    public int Stock { get; set; }
 
     public bool Enabled { get; set; } = true;
 

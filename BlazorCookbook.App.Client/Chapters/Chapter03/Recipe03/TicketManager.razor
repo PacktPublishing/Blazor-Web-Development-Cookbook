@@ -1,35 +1,49 @@
 ﻿@page "/ch03r03"
 @rendermode InteractiveWebAssembly
 
-@foreach (var ticket in Tickets)
+<button class="btn btn-sm btn-success"
+        @onclick="@ToggleTickets">
+    Toggle Tickets
+</button>
+
+@if (!ShowTickets) return;
+<hr />
+
+@foreach (var ticket in Tickets.All)
 {
-    <div class="d-flex justify-content-between w-50">
+    <div class="d-flex justify-content-between mb-1"
+         id="ticket-@ticket.Id">
+
         <div>@ticket.Title</div>
         <div>
-            <AmsOptions OnShow="@(() => Show(ticket))"
-                        OnDisable="@(() => Disable(ticket))"
-                        OnRemove="@(() => Remove(ticket))" />
+            <TicketOptions OnShow="@(() => Show(ticket))"
+                           OnTopUp="@(() => TopUp(ticket))"
+                           OnRemove="@(() => Remove(ticket))" />
         </div>
     </div>
 }
 
 @if (SelectedTicket is null) return;
-
 <hr />
+
 <div>Title: @SelectedTicket.Title</div>
 <div>Price: @SelectedTicket.Price</div>
-<div>Enabled: @SelectedTicket.Enabled</div>
+<div>Stock: @SelectedTicket.Stock</div>
 
 @code {
-    internal List<Ticket> Tickets = new(Data.Tickets.All);
-    internal Ticket? SelectedTicket;
+    protected bool ShowTickets { get; set; }
+
+    private void ToggleTickets()
+        => ShowTickets = !ShowTickets;
+
+    internal Ticket SelectedTicket;
 
     private void Show(Ticket ticket)
         => SelectedTicket = ticket;
 
-    private void Remove(Ticket ticket)
-        => Tickets.Remove(ticket);
+    private void TopUp(Ticket ticket)
+        => ticket.Stock += 5;
 
-    private void Disable(Ticket ticket)
-        => ticket.Enabled = false;
+    private void Remove(Ticket ticket)
+        => Tickets.All.Remove(ticket);
 }

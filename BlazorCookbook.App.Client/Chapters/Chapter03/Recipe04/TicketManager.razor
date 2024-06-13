@@ -1,4 +1,4 @@
-﻿@page "/ch03r05"
+﻿@page "/ch03r04"
 @rendermode InteractiveWebAssembly
 
 <h5>Quick creation</h5>
@@ -19,8 +19,7 @@
 @foreach (var ticket in Tickets.All)
 {
     <div class="d-flex justify-content-between mb-1"
-         id="ticket-@ticket.Id"
-         @onclick="() => Show(ticket)">
+         id="ticket-@ticket.Id">
 
         <div>@ticket.Title</div>
         <div>

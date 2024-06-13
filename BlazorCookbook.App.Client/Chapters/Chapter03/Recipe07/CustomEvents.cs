@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace BlazorCookbook.App.Client.Chapters.Chapter03.Recipe06;
+namespace BlazorCookbook.App.Client.Chapters.Chapter03.Recipe07;
 
 [EventHandler("onpreventcopy", typeof(PreventedCopyEventArgs))]
 public static class EventHandlers { }

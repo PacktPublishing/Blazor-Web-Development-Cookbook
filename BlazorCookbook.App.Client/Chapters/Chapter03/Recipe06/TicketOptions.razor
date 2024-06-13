@@ -1,0 +1,26 @@
+﻿<button class="btn btn-sm btn-success"
+        @onclick="@OnShow"
+        @onclick:stopPropagation>
+    Show
+</button>
+<button class="btn btn-sm btn-info"
+        @onclick="@OnTopUp"
+        @onclick:stopPropagation>
+    Top up
+</button>
+<button class="btn btn-sm btn-danger"
+        @onclick="@OnRemove"
+        @onclick:stopPropagation>
+    Remove
+</button>
+
+@code {
+    [Parameter, EditorRequired]
+    public EventCallback OnShow { get; set; }
+    
+    [Parameter, EditorRequired]
+    public EventCallback OnTopUp { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnRemove { get; set; }
+}

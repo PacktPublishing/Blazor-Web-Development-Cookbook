@@ -7,7 +7,7 @@ export function afterWebStarted(blazor) {
             event.preventDefault();
 
             return {
-                timestampUtc: new Date()
+                stamp: new Date()
             };
         }
     });

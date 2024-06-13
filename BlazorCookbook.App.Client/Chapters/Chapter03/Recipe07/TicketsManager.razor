@@ -1,26 +1,77 @@
 ﻿@page "/ch03r07"
 @rendermode InteractiveWebAssembly
 
-<LoadingIndicator Job="@GetTicketsAsync">
-    @if (Collection.Any())
+<ProgressIndicator Job="SaveAsync"
+                   Total="@Tickets.All.Count" />
+
+<h5>Quick creation</h5>
+<p>
+    <input value="@Creator"
+           @onkeydown="MonitorCreation"
+           @onkeydown:preventDefault />
+</p>
+
+<LoadingIndicator Job="@(() => Tickets.GetAsync())">
+    <hr />
+    @foreach (var ticket in Tickets.All)
     {
-        <p>Loaded @Collection.Count elements.</p>
+        <div class="d-flex justify-content-between mb-1"
+                id="ticket-@ticket.Id"
+                @onclick="() => Show(ticket)">
+
+            <div>@ticket.Title</div>
+            <div>
+                <TicketOptions OnShow="@(() => Show(ticket))"
+                                OnTopUp="@(() => TopUp(ticket))"
+                                OnRemove="@(() => Remove(ticket))" />
+            </div>
+        </div>
     }
 </LoadingIndicator>
 
-<ProgressIndicator Job="ShareTicketsAsync"
-                   Elements="@Data.Tickets.All" />
+@if (SelectedTicket is null) return;
+<hr />
+
+<PreventCopy>
+    <div>Title: @SelectedTicket.Title</div>
+    <div>Price: @SelectedTicket.Price</div>
+    <div>Stock: @SelectedTicket.Stock</div>
+</PreventCopy>
 
 @code {
-    [Inject] private ApiClient Api { get; init; } = default!;
+    internal Ticket SelectedTicket;
 
-    internal bool IsLoading, IsSharing;
-    internal double SharingProgress;
-    internal IList<Ticket> Collection = Array.Empty<Ticket>();
+    private void Show(Ticket ticket)
+        => SelectedTicket = ticket;
 
-    public async Task GetTicketsAsync()
-        => Collection = await Api.GetTicketsAsync(default);
+    private void TopUp(Ticket ticket)
+        => ticket.Stock += 5;
 
-    public Task ShareTicketsAsync(Ticket ticket)
-        => Api.ShareTicketAsync(ticket, default);
+    private void Remove(Ticket ticket)
+        => Tickets.All.Remove(ticket);
+
+    internal string Creator = string.Empty;
+
+    private void MonitorCreation(KeyboardEventArgs args)
+    {
+        if (args.Key == "+")
+        {
+            Tickets.All.Add(new() { Title = Creator });
+            Creator = string.Empty;
+            return;
+        }
+        if (args.IsBackspace() && Creator.Length > 0)
+        {
+            Creator = Creator[..^1];
+            return;
+        }
+        if (args.IsLetter())
+        {
+            Creator += args.Key;
+            return;
+        }
+    }
+
+    public Task SaveAsync(int index)
+        => Tickets.SaveAsync(Tickets.All[index]);
 }

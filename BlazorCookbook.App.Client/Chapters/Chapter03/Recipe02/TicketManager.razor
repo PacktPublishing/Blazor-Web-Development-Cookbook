@@ -1,36 +1,48 @@
 ﻿@page "/ch03r02"
 @rendermode InteractiveWebAssembly
 
-<table>
-    <tbody>
-        @foreach (var ticket in Tickets.All)
-        {
-            <tr>
-                <td>@ticket.Title</td>
-                <td>
-                    <button class="btn btn-sm btn-success"
-                            @onclick=@(() => Show(ticket))>
-                        Show details
-                    </button>
-                    <button class="btn btn-sm btn-success"
-                            @onclick=@(() => ticket.Availability += 5)>
-                        Top up
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<button class="btn btn-sm btn-success"
+        @onclick="@ToggleTickets">
+    Toggle Tickets
+</button>
+
+@if (!ShowTickets) return;
+<hr />
+
+@foreach (var ticket in Tickets.All)
+{
+    <div class="d-flex justify-content-between mb-1"
+         id="ticket-@ticket.Id">
+
+        <div>@ticket.Title</div>
+        <div>
+            <button class="btn btn-sm btn-success"
+                    @onclick=@(() => Show(ticket))>
+                Show
+            </button>
+            <button class="btn btn-sm btn-success"
+                    @onclick=@(() => ticket.Stock += 5)>
+                Top up
+            </button>
+        </div>
+
+    </div>
+}
 
 @if (SelectedTicket is null) return;
-
 <hr />
+
 <div>Title: @SelectedTicket.Title</div>
 <div>Price: @SelectedTicket.Price</div>
-<div>Availability: @SelectedTicket.Availability</div>
+<div>Stock: @SelectedTicket.Stock</div>
 
 @code {
-    internal Ticket? SelectedTicket;
+    protected bool ShowTickets { get; set; }
+
+    private void ToggleTickets()
+        => ShowTickets = !ShowTickets;
+
+    protected Ticket SelectedTicket;
 
     private void Show(Ticket ticket)
         => SelectedTicket = ticket;

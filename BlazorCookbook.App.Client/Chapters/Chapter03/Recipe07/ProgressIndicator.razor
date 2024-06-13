@@ -1,40 +1,29 @@
-﻿@typeparam T
-
-<button class="btn btn-sm btn-success"
+﻿<button class="btn btn-sm btn-success"
         @onclick="@RunAsync"
-        disabled="@(Progress.HasValue)">
-    Process
+        disabled="@(Progress > 0)">
+    @Label
 </button>
-
-<hr />
-@if (Progress.HasValue)
-{
-    <p>Processing @($"{Progress:0%}")...</p>
-}
 
 @code {
     [Parameter, EditorRequired]
-    public Func<T, Task> Job { get; set; } = default!;
-
+    public Func<int, Task> Job { get; set; }
     [Parameter, EditorRequired]
-    public IList<T> Elements { get; set; } = default!;
+    public int Total { get; set; }
 
-    internal double? Progress;
+    internal double Progress = 0;
+
+    private string Label
+        => Progress > 0 ? $"Processing {Progress:0%}"
+                        : "Process";
 
     private async Task RunAsync()
     {
-        var total = Elements.Count;
-        Progress = 0;
-        StateHasChanged();
-
-        for (int i = 0; i < total; i++)
+        for (int i = 0; i < Total; i++)
         {
-            Progress = 1.0 * (1 + i) / total;
+            Progress = 1.0 * (1 + i) / Total;
             StateHasChanged();
-
-            await Job.Invoke(Elements[i]);
+            await Job.Invoke(i);
         }
-
-        Progress = null;
+        Progress = 0;
     }
 }

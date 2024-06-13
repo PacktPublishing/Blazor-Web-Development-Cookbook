@@ -5,18 +5,19 @@
         @onclick="@ToggleTickets">
     Toggle Tickets
 </button>
-<hr />
 
 @if (!ShowTickets) return;
+<hr />
 
-<ul>
-    @foreach (var ticket in Tickets.All)
-    {
-        <li id="ticket-@ticket.Id">
-            @ticket.Title
-        </li>
-    }
-</ul>
+@foreach (var ticket in Tickets.All)
+{
+    <div class="d-flex justify-content-between mb-1"
+         id="ticket-@ticket.Id">
+
+        <div>@ticket.Title</div>
+        
+    </div>
+}
 
 @code {
     protected bool ShowTickets { get; set; }
