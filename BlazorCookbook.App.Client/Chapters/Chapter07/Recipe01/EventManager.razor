@@ -22,7 +22,7 @@
     {
         Store.Clear();
         if (string.IsNullOrWhiteSpace(Model.Name))
-            Store.Add(() => Model.Name, "You must provide name.");
+            Store.Add(() => Model.Name, "You must provide a name.");
     }
 
     protected override void OnInitialized()

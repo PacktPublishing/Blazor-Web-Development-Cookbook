@@ -14,11 +14,11 @@ public class EventNameValidationAttribute : ValidationAttribute
         var text = value?.ToString();
 
         if (string.IsNullOrWhiteSpace(text))
-            return Failure("You must provide name.",
+            return Failure("You must provide a name.",
                 validationContext.MemberName);
 
         if (text.Contains(_forbidden, StringComparison.InvariantCultureIgnoreCase))
-            return Failure("You musn't use the 'event' keyword.",
+            return Failure("You mustn't use the 'event' keyword.",
                 validationContext.MemberName);
 
         return ValidationResult.Success;
