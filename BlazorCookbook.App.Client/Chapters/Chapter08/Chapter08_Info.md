@@ -1,0 +1,2 @@
+As `Chapter08` requires scaffolding identity, adding authentication and authorization, you can find it as a separate project, attached to the same solution.
+It's placed in the `Chapter08` solution directory or in the `Chapter08` directory in the root repository directory.
