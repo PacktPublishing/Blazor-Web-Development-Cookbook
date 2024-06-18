@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth", "Chap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth.Client", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth.Client\BlazorCookbook.Auth.Client.csproj", "{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCookbook.Library", "BlazorCookbook.Library\BlazorCookbook.Library.csproj", "{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{0F7014C9-A97B-4FF3-ACAC-E17D217B3D95} = {EDED6444-0270-4BFE-8E42-9AB14E83351D}
 		{67B08E58-3FF1-4E7C-B771-901B0CD41211} = {4410E577-5A76-483D-8531-C44EC2A3B9C4}
 		{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28} = {4410E577-5A76-483D-8531-C44EC2A3B9C4}
+		{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5} = {EDED6444-0270-4BFE-8E42-9AB14E83351D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80F86693-BBAF-4A0B-9287-0223EF5A61F6}

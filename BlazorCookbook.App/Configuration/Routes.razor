@@ -1,5 +1,10 @@
-﻿<Router AppAssembly="@typeof(Program).Assembly"
-        AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly }">
+﻿@using BlazorCookbook.Library.Chapter09.Recipe01
+<Router AppAssembly="@typeof(Program).Assembly"
+        AdditionalAssemblies="new[]
+        {
+            typeof(Client._Imports).Assembly,
+            typeof(ExternalTicketManager).Assembly
+        }">
 
     <Found Context="routeData">
 

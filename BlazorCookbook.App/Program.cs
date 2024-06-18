@@ -1,5 +1,6 @@
 using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
+using BlazorCookbook.Library.Chapter09.Recipe01;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,8 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(
-        typeof(_Imports).Assembly
+        typeof(_Imports).Assembly,
+        typeof(ExternalTicketManager).Assembly
     );
 
 app.Run();

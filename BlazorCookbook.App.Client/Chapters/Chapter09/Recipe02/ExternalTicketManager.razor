@@ -1,0 +1,16 @@
+@page "/ch09r02"
+@page "/ch09r02/{ticketId:guid}"
+@page "/ch09r02/{ticketId:guid}/venues/{venue?}"
+
+<h1>Welcome in the external ticket manager!</h1>
+
+<p>Viewing @(Venue ?? "all venues")</p>
+@if (TicketId != Guid.Empty)
+{
+    <p>Ticket ID: @TicketId</p>
+}
+
+@code {
+    [Parameter] public Guid TicketId { get; set; }
+    [Parameter] public string Venue { get; set; }
+}

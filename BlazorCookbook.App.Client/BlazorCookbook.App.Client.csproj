@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Chapters\Chapter09\Recipe01\" />
+  </ItemGroup>
+
 </Project>

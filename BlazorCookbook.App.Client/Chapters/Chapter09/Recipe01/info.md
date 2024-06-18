@@ -1,0 +1,1 @@
+The `BlazorCookbook.Library` project required in this recipe can be found at the root repository directory.
