@@ -20,7 +20,7 @@
     protected int RecipeQuantity;
 
     protected override void OnParametersSet()
-        => RecipeQuantity = ChaptersContainer.HowManyRecipes(ChapterNumber);
+        => RecipeQuantity = ChaptersContainer.Values.Single(it => it.No == ChapterNumber).Recipes;
 
     private string ConstructUrl(int recipe)
         => $"/ch{ChapterNumber.ToString("00")}r{recipe.ToString("00")}";

@@ -11,13 +11,12 @@
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
 
-        @for (int i = 1; i < ChaptersContainer.HowManyChapters + 1; i++)
+        @foreach (var chapter in ChaptersContainer.Values)
         {
-            string url = $"chapters/{i}", chapter = $"Chapter {i}";
-
+            string url = $"chapters/{chapter.No}", label = $"Chapter {chapter.No}";
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="@url">
-                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> @chapter
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> @label
                 </NavLink>
             </div>
         }
