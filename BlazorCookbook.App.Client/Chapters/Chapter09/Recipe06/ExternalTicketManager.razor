@@ -11,8 +11,8 @@
 }
 
 <button class="btn btn-primary"
-        @onclick="@StartTaskAsync">
-    Start task
+        @onclick="@LoadDataAsync">
+    Load
 </button>
 
 @code {
@@ -35,10 +35,9 @@
         _cts?.Dispose();
     }
 
-    private async Task StartTaskAsync()
+    private async Task LoadDataAsync()
     {
         _cts = new();
         await DataSource.LoadAsync(_cts.Token);
-        _cts.Dispose();
     }
 }
