@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth", "Chap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Auth.Client", "Chapter08\BlazorCookbook.Auth\BlazorCookbook.Auth.Client\BlazorCookbook.Auth.Client.csproj", "{E8AAC42D-6F6D-4A70-9F77-11BE6F822C28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCookbook.Library", "BlazorCookbook.Library\BlazorCookbook.Library.csproj", "{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorCookbook.Library", "BlazorCookbook.Library\BlazorCookbook.Library.csproj", "{CA7A0A50-8E06-4E42-B226-EB5664C2E5E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

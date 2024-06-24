@@ -1,0 +1,44 @@
+@page "/ch09r06"
+@rendermode InteractiveWebAssembly
+@implements IDisposable
+
+<h1>Welcome in the external ticket manager!</h1>
+
+<p>Viewing @(Venue ?? "all venues")</p>
+@if (TicketId != Guid.Empty)
+{
+    <p>Ticket ID: @TicketId</p>
+}
+
+<button class="btn btn-primary"
+        @onclick="@StartTaskAsync">
+    Start task
+</button>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; init; }
+
+    [Parameter] public Guid TicketId { get; set; }
+    [Parameter] public string Venue { get; set; }
+
+    private CancellationTokenSource _cts;
+
+    private void CancelTask(object sender, LocationChangedEventArgs args)
+        => _cts?.Cancel();
+
+    protected override void OnInitialized()
+        => Navigation.LocationChanged += CancelTask;
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= CancelTask;
+        _cts?.Dispose();
+    }
+
+    private async Task StartTaskAsync()
+    {
+        _cts = new();
+        await DataSource.LoadAsync(_cts.Token);
+        _cts.Dispose();
+    }
+}
