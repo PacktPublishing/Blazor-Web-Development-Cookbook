@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-
-namespace BlazorCookbook.App.Client.Chapters.Chapter09.Data;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter09.Data;
 
 internal static class DataSource
 {
-    public static readonly IComponentRenderMode InteractiveWebAssemblyNoPreprender
-        = new InteractiveWebAssemblyRenderMode(prerender: false);
-
     public static async Task SaveAsync(Ticket ticket, CancellationToken cancellationToken)
     {
         try

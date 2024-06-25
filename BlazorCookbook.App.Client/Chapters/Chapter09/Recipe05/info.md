@@ -1,1 +1,1 @@
-You can find the `Router` implementation in the `Router` class, located in the server-side of the solution.
+The `/ch09r05` is left empty intentionally, so that routing to that page fails and fallback to the configured status code handling middleware pipeline.
