@@ -2,24 +2,26 @@
 @rendermode InteractiveWebAssembly
 @implements IDisposable
 
-<h1>Welcome in the external ticket manager!</h1>
+<EditForm FormName="ticket-creator"
+          Model="@Model"
+          OnValidSubmit="@SaveAsync">
+    
+    <p>
+        Name <InputText @bind-Value=@Model.Name />
+    </p>
+    <p>
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+    </p>
 
-<p>Viewing @(Venue ?? "all venues")</p>
-@if (TicketId != Guid.Empty)
-{
-    <p>Ticket ID: @TicketId</p>
-}
-
-<button class="btn btn-primary"
-        @onclick="@LoadDataAsync">
-    Load
-</button>
+</EditForm>
 
 @code {
     [Inject] private NavigationManager Navigation { get; init; }
 
-    [Parameter] public Guid TicketId { get; set; }
-    [Parameter] public string Venue { get; set; }
+    [SupplyParameterFromForm]
+    public Ticket Model { get; set; } = new();
 
     private CancellationTokenSource _cts;
 
@@ -35,9 +37,9 @@
         _cts?.Dispose();
     }
 
-    private async Task LoadDataAsync()
+    private async Task SaveAsync()
     {
         _cts = new();
-        await DataSource.LoadAsync(_cts.Token);
+        await DataSource.SaveAsync(Model, _cts.Token);
     }
 }
