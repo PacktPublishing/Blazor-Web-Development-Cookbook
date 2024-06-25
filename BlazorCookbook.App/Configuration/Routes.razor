@@ -4,7 +4,8 @@
         {
             typeof(Client._Imports).Assembly,
             typeof(ExternalTicketManager).Assembly
-        }">
+        }"
+        OnNavigateAsync="@LogNavigation">
 
     <Found Context="routeData">
 
@@ -17,3 +18,11 @@
     </Found>
 
 </Router>
+
+@code {
+    [Inject] private ILogger<Routes> Logger { get; init; }
+
+    private void LogNavigation(NavigationContext context)
+        => Logger.LogInformation("User entered: {Path}",
+            context.Path);
+}
