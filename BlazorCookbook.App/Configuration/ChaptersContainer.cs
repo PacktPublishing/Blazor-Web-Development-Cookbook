@@ -11,7 +11,7 @@ internal static class ChaptersContainer
         ( 5, 7 ),
         ( 6, 6 ),
         ( 7, 7 ),
-        ( 9, 9 ),
+        ( 9, 8 ),
         ( 10, 0 )
     ];
 }
