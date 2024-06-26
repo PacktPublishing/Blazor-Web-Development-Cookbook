@@ -1,0 +1,14 @@
+@page "/ch09r02"
+@page "/ch09r02/{eventId:guid}"
+@page "/ch09r02/{eventId:guid}/venues/{venue?}"
+
+<h1>Welcome in the external event manager!</h1>
+
+@if (EventId == default) return;
+<p>Event ID: @EventId</p>
+<p>In @(Venue ?? "all venues")</p>
+
+@code {
+    [Parameter] public Guid EventId { get; set; }
+    [Parameter] public string Venue { get; set; }
+}

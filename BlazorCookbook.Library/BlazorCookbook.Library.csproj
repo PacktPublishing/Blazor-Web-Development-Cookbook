@@ -15,8 +15,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Chapter09\Recipe01\" />
-  </ItemGroup>
-
 </Project>

@@ -37,7 +37,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(
         typeof(_Imports).Assembly,
-        typeof(ExternalTicketManager).Assembly
+        typeof(ExternalEventManager).Assembly
     );
 
 app.Run();
