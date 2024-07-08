@@ -2,16 +2,17 @@
 @rendermode InteractiveWebAssembly
 
 <Grid Data="@Tickets.LargeDataset">
-    <Header>
-        <tr>
-            <td>Tariff</td>
-            <td>Price</td>
-        </tr>
-    </Header>
-    <Row>
-        <tr>
-            <td>@context.Tariff</td>
-            <td>@context.Price</td>
-        </tr>
-    </Row>
+    <Column OnSort="@(() => Sort(nameof(Ticket.Tariff)))"
+            Label="Tariff">
+        @context.Tariff
+    </Column>
+    <Column OnSort="@(() => Sort(nameof(Ticket.Price)))"
+            Label="Price">
+        @context.Price
+    </Column>
 </Grid>
+
+@code {
+    private void Sort(string prop)
+        => Console.WriteLine($"Sorted by {prop}!");
+}

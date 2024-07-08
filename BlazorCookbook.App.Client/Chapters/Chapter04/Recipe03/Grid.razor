@@ -1,40 +1,60 @@
 ﻿@typeparam T
+@attribute [CascadingTypeParameter(nameof(T))]
 
 <table class="table table-bordered">
     <thead>
-        @Header
+        <tr>
+            @foreach (var column in Columns)
+            {
+                <th @onclick="@column.OnSort">
+                    @column.Label
+                </th>
+            }
+        </tr>
     </thead>
     <tbody>
         @foreach (var element in Set)
         {
-            @Row(element)
+            <tr>
+                @foreach (var column in Columns)
+                {
+                    <td>@column.Template(element)</td>
+                }
+            </tr>
         }
     </tbody>
 </table>
 
 <hr />
+<Paginator Paginate="@LoadAsync"
+           DataSize="@Data.Count" />
 
-<Paginator Getter="@LoadAsync" />
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
 
 @code {
     [Parameter, EditorRequired]
     public IList<T> Data { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment Header { get; set; }
+    public RenderFragment ChildContent { get; set; }
 
-    [Parameter, EditorRequired]
-    public RenderFragment<T> Row { get; set; }
+    protected List<ColumnViewModel<T>> Columns = [];
+    public void AddColumn(ColumnViewModel<T> column)
+        => Columns.Add(column);
 
-    protected IList<T> Set = Array.Empty<T>();
-
-    private Task LoadAsync(int page, int size)
+    protected override void OnAfterRender(bool firstRender)
     {
-        Set = Data.Skip((page - 1) * size)
-                  .Take(size)
-                  .ToList();
+        if (firstRender) StateHasChanged();
+    }
 
-        StateHasChanged();
+    protected IEnumerable<T> Set = [];
+    public Task LoadAsync(PaginateEventArgs args)
+    {
+        Set = Data.Skip((args.Page - 1) * args.Size)
+                  .Take(args.Size);
+
         return Task.CompletedTask;
     }
 }

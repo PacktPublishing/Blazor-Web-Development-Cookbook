@@ -10,7 +10,6 @@ public static class Configure
     public static IServiceCollection AddChapters(this IServiceCollection services)
     {
         services.AddChapter02()
-                .AddChapter04()
                 .AddChapter05()
                 .AddChapter06();
 

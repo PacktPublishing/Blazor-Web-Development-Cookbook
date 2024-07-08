@@ -14,7 +14,7 @@
 @code {
     [Parameter, EditorRequired]
     public Func<int, int, CancellationToken, 
-        Task<(int, IList<T>)>> Provider { get; set; }
+        Task<(int, List<T>)>> Provider { get; set; }
 
     [Parameter, EditorRequired]
     public RenderFragment Header { get; set; }

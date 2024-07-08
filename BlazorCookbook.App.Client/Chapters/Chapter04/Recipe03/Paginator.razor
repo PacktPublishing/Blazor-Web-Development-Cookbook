@@ -1,30 +1,49 @@
 ﻿<div class="d-flex">
-    <button @onclick="@PreviousPageAsync">Previous</button>
-    <input disabled value="@CurrentPage" />
-    <button @onclick="@NextPageAsync">Next</button>
+    <button @onclick="@PreviousAsync">
+        Previous
+    </button>
+    <input disabled class="text-center"
+           value="@CurrentPage" />
+    <button @onclick="@NextAsync">
+        Next
+    </button>
 </div>
 
 @code {
     [Parameter, EditorRequired]
-    public Func<int, int, Task> Getter { get; set; }
+    public EventCallback<PaginateEventArgs> Paginate { get; set; }
+    [Parameter, EditorRequired]
+    public int DataSize { get; set; }
 
-    protected int CurrentPage = 1, Size = 5;
+    protected int TotalPages,
+                  CurrentPage = 1,
+                  PageSize = 5;
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
-        => !firstRender ? Task.CompletedTask : ReloadAsync();
+    protected override void OnInitialized()
+        => TotalPages = (DataSize + PageSize - 1) / PageSize;
 
-    private Task NextPageAsync()
+    private Task LoadAsync()
     {
+        var state = new PaginateEventArgs(CurrentPage, PageSize);
+        return Paginate.InvokeAsync(state);
+    }
+
+    private async Task NextAsync()
+    {
+        if (CurrentPage == TotalPages) return;
         CurrentPage++;
-        return ReloadAsync();
+        await LoadAsync();
     }
 
-    private Task PreviousPageAsync()
+    private async Task PreviousAsync()
     {
+        if (CurrentPage == 1) return;
         CurrentPage--;
-        return ReloadAsync();
+        await LoadAsync();
     }
 
-    private Task ReloadAsync()
-        => Getter.Invoke(CurrentPage, Size);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) await LoadAsync();
+    }
 }
