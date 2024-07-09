@@ -1,40 +1,85 @@
 ﻿@typeparam T
-@implements IGridActions
+@attribute [CascadingTypeParameter(nameof(T))]
 
-<CascadingValue Value="@this">
-    <table class="table table-bordered">
-        <thead>
-            @Header
-        </thead>
-        <tbody>
-            @foreach (var element in Data)
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var column in Columns)
             {
-                @Row(element)
+                <th @onclick="@(() => SortAsync(column))">
+                    @column.Label
+                </th>
             }
-        </tbody>
-    </table>
-</CascadingValue>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var element in Set)
+        {
+            <tr>
+                @foreach (var column in Columns)
+                {
+                    <td>@column.Template(element)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
 
-<Sorter @ref="@Sorter" />
+<hr />
+<Paginator @ref="@PaginatorRef"
+           Paginate="@LoadAsync"
+           DataSize="@Data.Count" />
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
 
 @code {
     [Parameter, EditorRequired]
-    public IList<T> Data { get; set; }
-
-    [Parameter]
-    public EventCallback<IList<T>> DataChanged { get; set; }
+    public List<T> Data { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment Header { get; set; }
+    public RenderFragment ChildContent { get; set; }
 
-    [Parameter, EditorRequired]
-    public RenderFragment<T> Row { get; set; }
+    protected List<ColumnViewModel<T>> Columns = [];
+    public void AddColumn(ColumnViewModel<T> column)
+        => Columns.Add(column);
 
-    protected Sorter Sorter = default!;
-
-    public Task SortAsync(string by)
+    protected override void OnAfterRender(bool firstRender)
     {
-        Data = Sorter.Sort(Data, by);
-        return DataChanged.InvokeAsync(Data);
+        if (firstRender) StateHasChanged();
+    }
+
+    protected IEnumerable<T> Set = [];
+    public Task LoadAsync(PaginateEventArgs args)
+    {
+        Set = Data.Skip((args.Page - 1) * args.Size)
+                  .Take(args.Size);
+
+        return Task.CompletedTask;
+    }
+
+    private string _currentSortColumn;
+    private bool _isAsc;
+    protected Paginator PaginatorRef;
+
+    public Task SortAsync(ColumnViewModel<T> column)
+    {
+        if (_currentSortColumn == column.Label)
+            _isAsc = !_isAsc;
+        else
+            _isAsc = true;
+
+        Comparison<T> comparer = (left, right) =>
+        {
+            var result = Comparer<object>.Default
+                .Compare(column.Property(left), column.Property(right));
+
+            return _isAsc ? result : -result;
+        };
+        Data.Sort(comparer);
+
+        _currentSortColumn = column.Label;
+        return PaginatorRef.LoadAsync();
     }
 }

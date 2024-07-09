@@ -74,12 +74,3 @@ internal static class Tickets
         }
     }
 }
-
-internal static class TicketsExtensions
-{
-    public static void SortByTariff(this List<Ticket> collection)
-        => collection.Sort((left, right) => left.Tariff.CompareTo(right.Tariff));
-
-    public static void SortByPrice(this List<Ticket> collection)
-        => collection.Sort((left, right) => left.Price.CompareTo(right.Price));
-}

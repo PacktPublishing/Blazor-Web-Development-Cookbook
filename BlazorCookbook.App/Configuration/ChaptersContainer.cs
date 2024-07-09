@@ -7,7 +7,7 @@ internal static class ChaptersContainer
         ( 1, 7 ),
         ( 2, 6 ),
         ( 3, 7 ),
-        ( 4, 7 ),
+        ( 4, 6 ),
         ( 5, 7 ),
         ( 6, 6 ),
         ( 7, 7 ),
