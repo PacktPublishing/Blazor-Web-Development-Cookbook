@@ -74,4 +74,6 @@ public sealed class TicketsApi
 
         return (Tickets.LargeDataset.Count, data);
     }
+
+    public IQueryable<Ticket> Get() => Tickets.LargeDataset.AsQueryable();
 }
