@@ -13,6 +13,8 @@ public static class Configure
                 .AddChapter05()
                 .AddChapter06();
 
+        services.AddScoped<TicketsApi>();
+
         return services;
     }
 }

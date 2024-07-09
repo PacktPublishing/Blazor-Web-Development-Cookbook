@@ -58,19 +58,20 @@ internal static class Tickets
         new("Student", 10.00m),
         new("Honorary", 1.00m)
     ];
+}
 
-    public static class Service
+public sealed class TicketsApi
+{
+    public async Task<(int, List<Ticket>)> GetAsync(int from, int size, CancellationToken cancellationToken)
     {
-        public static async Task<(int, List<Ticket>)> GetAsync(int from,
-            int size, CancellationToken cancellationToken)
-        {
-            await Task.Delay(200, cancellationToken);
+        await Task.Delay(200, cancellationToken);
 
-            var data = LargeDataset.Skip(from)
-                                   .Take(size)
-                                   .ToList();
+        var data = Tickets
+            .LargeDataset
+            .Skip(from)
+            .Take(size)
+            .ToList();
 
-            return (LargeDataset.Count, data);
-        }
+        return (Tickets.LargeDataset.Count, data);
     }
 }

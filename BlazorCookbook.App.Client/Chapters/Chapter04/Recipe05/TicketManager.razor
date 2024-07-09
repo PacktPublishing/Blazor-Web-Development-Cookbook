@@ -1,7 +1,8 @@
 ﻿@page "/ch04r05"
 @rendermode InteractiveWebAssembly
+@inject TicketsApi Tickets
 
-@* <Grid Provider="@Tickets.Service.GetAsync">
+<Grid Provider="@Tickets.GetAsync">
     <Header>
         <tr>
             <td>Id</td>
@@ -16,4 +17,4 @@
             <td>@context.Price</td>
         </tr>
     </Row>
-</Grid> *@
+</Grid>
