@@ -2,28 +2,12 @@
 @using BlazorCookbook.App.Client.Chapters.Chapter01.Data
 @rendermode InteractiveWebAssembly
 
-<Grid Data="@Samples.Tickets" Context="ticket">
-    <Header>
-        <tr>
-            <td>Ticket code</td>
-            <td>Tariff</td>
-            <td>Price</td>
-            <td></td>
-        </tr>
-    </Header>
-    <Row>
-        <tr>
-            <td>@ticket.Id</td>
-            <td>@ticket.Tariff</td>
-            <td>@ticket.Price</td>
-            <td @onclick="() => Add(ticket)">
-                Add to Cart
-            </td>
-        </tr>
-    </Row>
-</Grid>
+<Ticket Id="@Samples.Adult.Id">
+    @Samples.Adult.Tariff (@Samples.Adult.Price)
+</Ticket>
 
-@code {
-    public void Add(TicketViewModel ticket)
-        => Console.WriteLine($"Ticket {ticket.Id} added!");
-}
+<Ticket Id="@Samples.FreeAdmission.Id">
+    <div class="free-ticket">
+        @Samples.FreeAdmission.Tariff
+    </div>
+</Ticket>

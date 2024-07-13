@@ -1,11 +1,11 @@
-﻿@page "/ch01r02"
+﻿@page "/ch01r03"
 @rendermode InteractiveWebAssembly
 
-<Ticket Tariff="Adult" Price="10.00m" />
-@* <Ticket Tariff="Child" /> *@
+<Ticket Tariff="Adult" Price="10.00m"
+        OnAdded="@Add" />
 
-@* added only to allow proj compilation *@
-<Ticket Tariff="Child" Price="0"/>
+<Ticket Tariff="Child" Price="5.00m"
+        OnAdded="@Add" />
 
 @code {
     private void Add()
