@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+    <PackageReference Include="SmartComponents.AspNetCore" Version="0.1.0-preview10148" />
+    <PackageReference Include="SmartComponents.Inference.OpenAI" Version="0.1.0-preview10148" />
   </ItemGroup>
 
 </Project>

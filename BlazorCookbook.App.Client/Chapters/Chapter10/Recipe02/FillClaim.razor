@@ -1,0 +1,28 @@
+﻿@page "/ch10r02"
+@using SmartComponents
+
+<EditForm Model="@Claim" FormName="claim-form">
+    <p>Event name: <InputText @bind-Value="@Claim.Event" /></p>
+    <p>Date: <InputText @bind-Value="@Claim.Date" /></p>
+    <p>Customer name: <InputText @bind-Value="@Claim.Customer.Name" /></p>
+    <p>Customer email: <InputText @bind-Value="@Claim.Customer.Email" /></p>
+
+    <button type="submit">Submit</button>
+    <SmartPasteButton DefaultIcon />
+</EditForm>
+
+<hr />
+<p>
+    Sample data:<br />
+    Dear sir or madam,<br><br>
+    I would like to request a refund of the tickets<br>
+    I bought for the Night at the Museum on the 15/07/2024.<br><br>
+    You can find the receipt attached.<br><br>
+    Jhon Doe<br>
+    jhon.doe@packt.com
+</p>
+
+@code {
+    [SupplyParameterFromForm]
+    public ClaimViewModel Claim { get; set; } = new();
+}

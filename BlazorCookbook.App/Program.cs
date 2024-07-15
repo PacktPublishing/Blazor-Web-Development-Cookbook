@@ -1,6 +1,7 @@
 using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
 using BlazorCookbook.Library.Chapter09.Recipe01;
+using SmartComponents.Inference.OpenAI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddChapters();
+builder.Services.AddSmartComponents()
+                .WithInferenceBackend<OpenAIInferenceBackend>();
 
 var app = builder.Build();
 
