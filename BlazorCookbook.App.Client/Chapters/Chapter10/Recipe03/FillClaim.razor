@@ -1,0 +1,25 @@
+﻿@page "/ch10r03"
+@using SmartComponents
+
+<EditForm Model="@Claim" FormName="claim-form">
+    <p>Event name: <InputText @bind-Value="@Claim.Event" /></p>
+    <p>Date: <InputText @bind-Value="@Claim.Date" /></p>
+    <p>Customer name: <InputText @bind-Value="@Claim.Customer.Name" /></p>
+    <p>Customer email: <InputText @bind-Value="@Claim.Customer.Email" /></p>
+
+    <p>
+        <SmartTextArea @bind-Value="@Claim.Message"
+                       rows="5" cols="50"
+                       UserRole="@replier" />
+    </p>
+
+    <button type="submit">Submit</button>
+    <SmartPasteButton DefaultIcon />
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public ClaimViewModel Claim { get; set; } = new();
+
+    const string replier = "An event organizer support team member replying to a claim request.";
+}
