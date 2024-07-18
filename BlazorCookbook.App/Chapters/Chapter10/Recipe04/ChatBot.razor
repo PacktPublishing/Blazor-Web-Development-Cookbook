@@ -1,0 +1,41 @@
+﻿@page "/ch10r04"
+@rendermode InteractiveServer
+@using OpenAI.Chat
+
+<h3>What can I help you with?</h3>
+<EditForm Model="@Model" FormName="chat-input"
+          OnSubmit="@SendMessage">
+    <InputText @bind-Value="@Model.Value" />
+    <button type="submit">Send</button>
+</EditForm>
+
+<hr />
+@foreach (var message in Messages)
+{
+    <p>@message</p>
+}
+
+@code {
+
+    [Inject] private ChatClient Chat { get; init; }
+
+    protected InputModel Model = new();
+    protected List<string> Messages = [];
+    private List<ChatMessage> _messages = [];
+
+    private async Task SendMessage()
+    {
+        if (!Model.IsValid) return;
+
+        var message = new UserChatMessage(Model.Value);
+        Messages.Add($"You: {Model.Value}");
+        _messages.Add(message);
+
+        var chatResponse = await Chat.CompleteChatAsync(_messages);
+        var response = chatResponse.Value.Content[0].Text;
+
+        _messages.Add(new AssistantChatMessage(response));
+        Messages.Add($"OpenAI: {response}");
+        Model.Value = string.Empty;
+    }
+}

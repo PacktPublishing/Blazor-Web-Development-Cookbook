@@ -1,3 +1,4 @@
+using BlazorCookbook.App.Chapters.Chapter10.Recipe04;
 using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
 using BlazorCookbook.Library.Chapter09.Recipe01;
@@ -5,14 +6,20 @@ using SmartComponents.Inference.OpenAI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+// for clarity, DI configuration for Chapter 10 / Recipe 04 is hidden within AddChatBot()
+builder.AddChatBot();
 
 builder.Services.AddChapters();
-builder.Services.AddSmartComponents()
-                .WithInferenceBackend<OpenAIInferenceBackend>();
+
+builder.Services
+       .AddSmartComponents()
+       .WithInferenceBackend<OpenAIInferenceBackend>();
+
+builder.Services
+       .AddRazorComponents()
+       .AddInteractiveServerComponents()
+       .AddInteractiveWebAssemblyComponents();
+
 
 var app = builder.Build();
 
