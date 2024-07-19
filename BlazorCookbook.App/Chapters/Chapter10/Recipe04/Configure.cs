@@ -1,6 +1,5 @@
 ﻿using Azure.AI.OpenAI;
 using Azure;
-using OpenAI.Chat;
 
 namespace BlazorCookbook.App.Chapters.Chapter10.Recipe04;
 

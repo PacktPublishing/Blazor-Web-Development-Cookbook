@@ -1,4 +1,5 @@
 using BlazorCookbook.App.Chapters.Chapter10.Recipe04;
+using BlazorCookbook.App.Chapters.Chapter10.Recipe05;
 using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
 using BlazorCookbook.Library.Chapter09.Recipe01;
@@ -7,7 +8,12 @@ using SmartComponents.Inference.OpenAI;
 var builder = WebApplication.CreateBuilder(args);
 
 // for clarity, DI configuration for Chapter 10 / Recipe 04 is hidden within AddChatBot()
+// feel free to comment it out
 builder.AddChatBot();
+
+// for clarity, DI configuration for Chapter 10 / Recipe 05 is hidden within EnhanceChatBotWithExistingData()
+// feel free to comment it out
+builder.EnhanceChatBotWithExistingData();
 
 builder.Services.AddChapters();
 
