@@ -1,5 +1,4 @@
-﻿@using BlazorCookbook.App.Client.Chapters.Chapter05.Data
-@page "/ch05r02"
+﻿@page "/ch05r02"
 @rendermode Config.PrerenderDisabled
 
 @foreach (var item in Data)
@@ -12,12 +11,16 @@
 }
 
 @code {
-    [Inject] private StateContainer<Event> Container { get; init; }
-    [Inject] private NavigationManager Navigation { get; init; }
-    [Inject] private Api Api { get; init; }
+    [Inject]
+    private StateContainer<Event> Container { get; init; }
 
-    protected IList<Event> Data = Array.Empty<Event>();
+    [Inject]
+    private NavigationManager Navigation { get; init; }
 
+    [Inject]
+    private Api Api { get; init; }
+
+    protected IList<Event> Data = [];
     protected override async Task OnInitializedAsync()
         => Data = await Api.GetEventsAsync(default);
 

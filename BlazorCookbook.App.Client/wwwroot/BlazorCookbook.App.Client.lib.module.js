@@ -14,7 +14,6 @@ export function afterWebStarted(blazor) {
 }
 
 window.browserStorage = {
-
     get: function (type, key) {
         if (type === 'sessionStorage') {
             return sessionStorage.getItem(key);
@@ -33,6 +32,4 @@ window.browserStorage = {
             localStorage.setItem(key, value);
         }
     }
-
 };
-

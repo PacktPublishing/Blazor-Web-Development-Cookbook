@@ -15,6 +15,8 @@ builder.AddChatBot();
 // feel free to comment it out
 builder.EnhanceChatBotWithExistingData();
 
+// service registrations are encapsulated in the AddChapters extension method
+// for clarity and easier navigation
 builder.Services.AddChapters();
 
 builder.Services

@@ -7,6 +7,5 @@ public class StateContainer<T>
     public void Persist(Guid key, T value)
         => _container.TryAdd(key, value);
 
-    public T Resolve(Guid key)
-        => _container[key];
+    public T Resolve(Guid key) => _container[key];
 }

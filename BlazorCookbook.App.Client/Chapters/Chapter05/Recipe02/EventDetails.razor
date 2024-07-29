@@ -1,5 +1,4 @@
-﻿@using BlazorCookbook.App.Client.Chapters.Chapter05.Data
-@page "/ch05r02/events/{eventId:guid}"
+﻿@page "/ch05r02/events/{eventId:guid}"
 @rendermode Config.PrerenderDisabled
 
 @if (Model is null) return;
@@ -11,7 +10,6 @@ It has @Model.Capacity spots left!
     [Parameter] public Guid EventId { get; set; }
 
     protected Event Model;
-
     protected override void OnParametersSet()
         => Model = Container.Resolve(EventId);
 }
