@@ -17,3 +17,21 @@ public record Event
     [JsonIgnore]
     public string Json => JsonSerializer.Serialize(this);
 }
+
+public record EventPeriod
+{
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+}
+
+public enum EventType
+{
+    Conference,
+    Seminar,
+    Workshop
+}
+
+public static class EventVenues
+{
+    public static readonly string[] All = ["South hall", "Main hall", "Garden"];
+}

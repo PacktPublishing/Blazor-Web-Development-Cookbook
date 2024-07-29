@@ -1,8 +1,7 @@
 ﻿@* @page "/ch06r02" *@
-@using BlazorCookbook.App.Client.Chapters.Chapter06.Data
 
-<form method="post" @onsubmit="@Save" @formname="forEvent"
-      data-enhance>
+<form method="post" @onsubmit="@Save"
+      @formname="event-form" data-enhance>
 
     <AntiforgeryToken />
     <label>

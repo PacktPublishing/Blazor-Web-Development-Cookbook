@@ -1,7 +1,6 @@
 ﻿@page "/ch06r02"
-@using BlazorCookbook.App.Client.Chapters.Chapter06.Data
 
-<EditForm FormName="forEvent" Model="@Model"
+<EditForm FormName="event-form" Model="@Model"
           OnSubmit="@Save" Enhance>
     <label>
         Name:
@@ -16,7 +15,6 @@
 
     protected override void OnInitialized()
         => Model ??= new(); 
-
     private void Save()
         => Console.WriteLine($"Saved {Model.Name}.");
 }

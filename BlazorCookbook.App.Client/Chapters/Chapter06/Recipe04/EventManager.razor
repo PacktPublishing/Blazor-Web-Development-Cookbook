@@ -1,7 +1,6 @@
 ﻿@page "/ch06r04"
-@using BlazorCookbook.App.Client.Chapters.Chapter06.Data
 
-<EditForm FormName="forEvent" Model="@Model"
+<EditForm FormName="event-form" Model="@Model"
           OnSubmit="@Save" Enhance>
 
     <p>Name: <InputText @bind-Value="@Model.Name" /></p>
