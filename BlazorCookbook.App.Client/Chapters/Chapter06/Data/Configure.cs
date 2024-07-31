@@ -4,9 +4,7 @@ public static class Configure
 {
     public static IServiceCollection AddChapter06(this IServiceCollection services)
     {
-        //registration of sample data service
-
-        services.AddTransient<Recipe05.FileStorage>();
+        services.AddTransient<FileStorage>();
 
         return services;
     }
