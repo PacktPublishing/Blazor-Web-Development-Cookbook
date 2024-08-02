@@ -1,7 +1,7 @@
 ﻿@page "/ch07r01"
 @implements IDisposable
 
-<EditForm EditContext="@Context" FormName="forEvent"
+<EditForm EditContext="@Context" FormName="event-form"
           OnValidSubmit="@Save">
     <p>Name: <InputText @bind-Value="@Model.Name" /></p>
     <p><ValidationMessage For="() => Model.Name" /></p>

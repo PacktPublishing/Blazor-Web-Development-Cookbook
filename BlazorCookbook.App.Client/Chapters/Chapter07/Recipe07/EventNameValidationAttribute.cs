@@ -1,6 +1,7 @@
 ﻿namespace BlazorCookbook.App.Client.Chapters.Chapter07.Recipe07;
 
 using System.ComponentModel.DataAnnotations;
+
 public class EventNameValidationAttribute : ValidationAttribute
 {
     private const string _forbidden = "event";

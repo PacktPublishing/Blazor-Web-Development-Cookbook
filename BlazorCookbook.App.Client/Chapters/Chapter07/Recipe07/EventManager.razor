@@ -2,7 +2,7 @@
 @rendermode InteractiveWebAssembly
 @implements IDisposable
 
-<EditForm EditContext="@Context" FormName="forEvent"
+<EditForm EditContext="@Context" FormName="event-form"
           OnValidSubmit="@Save">
     <p>Name: <InputText @bind-Value="@Model.Name" /></p>
     <p>

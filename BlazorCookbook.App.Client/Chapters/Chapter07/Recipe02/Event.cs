@@ -2,7 +2,7 @@
 
 namespace BlazorCookbook.App.Client.Chapters.Chapter07.Recipe02;
 
-public record Event
+public class Event
 {
     [Required(ErrorMessage = "You must provide a name.")]
     public string Name { get; set; }

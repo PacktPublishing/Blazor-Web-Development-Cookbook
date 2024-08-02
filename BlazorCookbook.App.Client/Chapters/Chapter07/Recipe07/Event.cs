@@ -2,7 +2,7 @@
 
 namespace BlazorCookbook.App.Client.Chapters.Chapter07.Recipe07;
 
-public record Event
+public class Event
 {
     [EventNameValidation]
     public string Name { get; set; }

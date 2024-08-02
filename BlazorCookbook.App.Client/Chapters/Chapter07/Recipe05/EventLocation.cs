@@ -2,7 +2,7 @@
 
 namespace BlazorCookbook.App.Client.Chapters.Chapter07.Recipe05;
 
-public record EventLocation
+public class EventLocation
 {
     [Required(ErrorMessage = "You must provide a venue.")]
     public string Venue { get; set; }
