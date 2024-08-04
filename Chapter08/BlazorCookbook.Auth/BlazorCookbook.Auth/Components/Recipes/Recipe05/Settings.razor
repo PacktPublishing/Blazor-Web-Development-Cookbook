@@ -5,6 +5,11 @@
 @using Microsoft.AspNetCore.Identity
 @using BlazorCookbook.Auth.Data
 
+@inject IdentityUserAccessor UserAccessor
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityRedirectManager Navigation
+
 <h3>Settings</h3>
 <AuthorizeView Context="auth">
     <StatusMessage />
@@ -26,11 +31,6 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
-
-    [Inject] private IdentityUserAccessor UserAccessor { get; set; }
-    [Inject] private UserManager<ApplicationUser> UserManager { get; set; }
-    [Inject] private SignInManager<ApplicationUser> SignInManager { get; set; }
-    [Inject] private IdentityRedirectManager Navigation { get; set; }
 
     [CascadingParameter] private HttpContext HttpContext { get; set; }
 

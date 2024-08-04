@@ -1,7 +1,7 @@
 ﻿@page "/ch08r07"
 @rendermode InteractiveServer
+@inject NavigationManager Navigation
 
-<h3>Settings</h3>
 <p>
     <button @onclick=@GoToTicketsAsync>
         Support tickets
@@ -10,7 +10,6 @@
 
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; }
-    [Inject] private NavigationManager Navigation { get; init; }
 
     private async Task GoToTicketsAsync()
     {

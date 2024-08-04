@@ -4,6 +4,9 @@
 @using BlazorCookbook.Auth.Components.Account.Shared
 @using Microsoft.AspNetCore.Identity
 
+@inject RoleManager<IdentityRole> RoleManager
+@inject IdentityRedirectManager Navigation
+
 <h3>Settings</h3>
 <AuthorizeView Context="auth">
     <StatusMessage />
@@ -11,7 +14,7 @@
               OnValidSubmit="@SaveAsync"
               Model="@Input">
 
-        <p>Name <InputText @bind-Value="@Input.RoleName" /></p>
+        <p>Role name <InputText @bind-Value="@Input.RoleName" /></p>
         <p><button type="submit">Save</button></p>
 
     </EditForm>
@@ -22,9 +25,6 @@
     {
         public string RoleName { get; set; }
     }
-
-    [Inject] private RoleManager<IdentityRole> RoleManager { get; set; }
-    [Inject] private IdentityRedirectManager Navigation { get; set; }
 
     [CascadingParameter] private HttpContext HttpContext { get; set; }
 
