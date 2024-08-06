@@ -49,6 +49,6 @@
         _cts = new();
         var eventId = await Source.LoadAsync(_cts.Token);
         if (_cts.IsCancellationRequested) return;
-        Nav.NavigateTo(DeepLinks.GetPage(eventId));
+        Nav.NavigateTo($"/ch09r07/{eventId}");
     }
 }

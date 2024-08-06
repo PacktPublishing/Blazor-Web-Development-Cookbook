@@ -1,4 +1,6 @@
 ﻿@using BlazorCookbook.Library.Chapter09.Recipe01
+@inject ILogger<Routes> Logger
+
 <Router AppAssembly="@typeof(Program).Assembly"
         AdditionalAssemblies="new[]
         {
@@ -20,9 +22,6 @@
 </Router>
 
 @code {
-    [Inject] private ILogger<Routes> Logger { get; init; }
-
     private void LogNavigation(NavigationContext context)
-        => Logger.LogInformation("User entered: {Path}",
-            context.Path);
+        => Logger.LogInformation("User entered: {Path}", context.Path);
 }

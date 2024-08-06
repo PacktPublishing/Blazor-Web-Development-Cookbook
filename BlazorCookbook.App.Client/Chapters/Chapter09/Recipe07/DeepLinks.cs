@@ -6,7 +6,4 @@ public static class DeepLinks
         LandingPage = "/ch09r07",
         EventPage = "/ch09r07/{eventId:guid}",
         EventAtVenuePage = "/ch09r07/{eventId:guid}/venues/{venue?}";
-
-    public static string GetPage(Guid eventId)
-        => EventPage.Replace("{eventId:guid}", $"{eventId}");
 }
