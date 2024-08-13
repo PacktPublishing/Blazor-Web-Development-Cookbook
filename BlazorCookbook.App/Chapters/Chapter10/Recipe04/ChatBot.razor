@@ -21,7 +21,10 @@
 
     protected InputModel Model = new();
     protected List<string> Messages = [];
-    private List<ChatMessage> _messages = [];
+    private List<ChatMessage> _messages =
+    [
+        new SystemChatMessage("Act as a friendly salesman for the Blazor Web Development Cookbook written by Pawel Bazyluk.")
+    ];
 
     private async Task SendMessage()
     {
