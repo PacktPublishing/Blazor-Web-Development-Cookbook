@@ -1,17 +1,23 @@
 <div class="ticket">
-    <div class="ticket-info">@ChildContent</div>
+    <div class="name">@Tariff</div>
+    <div class="price">@(Price.ToString("0.00 $"))</div>
     <div class="ticket-actions">
-        <button @onclick="@Add">Add to cart</button>
+        <button @onclick="@Add">
+            Add to cart
+        </button>
     </div>
 </div>
 
 @code {
-    [Parameter, EditorRequired]
-    public Guid Id { get; set; }
+
+    [CascadingParameter]
+    public Cart Cart { get; set; }
 
     [Parameter, EditorRequired]
-    public RenderFragment ChildContent { get; set; }
+    public string Tariff { get; set; }
 
-    public void Add()
-        => Console.WriteLine($"Ticket {Id} added!");
+    [Parameter, EditorRequired]
+    public decimal Price { get; set; }
+
+    public void Add() => Cart.Add(Tariff, Price);
 }

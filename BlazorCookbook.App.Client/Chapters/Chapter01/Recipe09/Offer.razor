@@ -1,4 +1,4 @@
-﻿@page "/ch01r08"
+﻿@page "/ch01r09"
 @using BlazorCookbook.App.Client.Chapters.Chapter01.Data
 @rendermode InteractiveWebAssembly
 
@@ -23,7 +23,28 @@
     </Row>
 </Grid>
 
+@if (AlertType is null) return;
+
+<DynamicComponent Type="@AlertType"
+                  Parameters="@AlertParams" />
+
 @code {
+    protected Type AlertType;
+    protected Dictionary<string, object> AlertParams;
+
     public void Add(TicketViewModel ticket)
-        => Console.WriteLine($"Ticket {ticket.Id} added!");
+    {
+        AlertType = ticket.AvailableSeats == 0 ?
+            typeof(Alerts.SoldOut) :
+            typeof(Alerts.AddedToCart);
+
+        AlertParams = new();
+        if (ticket.AvailableSeats == 0)
+        {
+            AlertParams.Add(
+                nameof(ticket.Tariff),
+                ticket.Tariff
+            );
+        }
+    }
 }

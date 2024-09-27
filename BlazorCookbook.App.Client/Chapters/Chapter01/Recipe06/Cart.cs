@@ -1,4 +1,4 @@
-﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Recipe05;
+﻿namespace BlazorCookbook.App.Client.Chapters.Chapter01.Recipe06;
 
 public class Cart(Action onStateHasChanged)
 {

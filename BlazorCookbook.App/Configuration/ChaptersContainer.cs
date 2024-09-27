@@ -4,7 +4,7 @@ internal static class ChaptersContainer
 {
     public static readonly List<(int No, int Recipes)> Values =
     [
-        ( 1, 8 ),
+        ( 1, 9 ),
         ( 2, 6 ),
         ( 3, 7 ),
         ( 4, 6 ),
