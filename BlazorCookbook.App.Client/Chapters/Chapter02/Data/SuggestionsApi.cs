@@ -1,6 +1,6 @@
 ﻿namespace BlazorCookbook.App.Client.Chapters.Chapter02.Data;
 
-internal sealed class SuggestionsApi
+public sealed class SuggestionsApi
 {
     private const StringComparison _comparer
         = StringComparison.InvariantCultureIgnoreCase;
