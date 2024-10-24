@@ -1,5 +1,3 @@
-using BlazorCookbook.App.Chapters.Chapter10.Recipe04;
-using BlazorCookbook.App.Chapters.Chapter10.Recipe05;
 using BlazorCookbook.App.Client;
 using BlazorCookbook.App.Configuration;
 using BlazorCookbook.Library.Chapter09.Recipe01;
@@ -35,23 +33,54 @@ builder.Services.AddCascadingValue(it => new Chapter05.Recipe07.CartState());
 
 builder.Services.AddTransient<Chapter06.Data.FileStorage>();
 
-// for clarity, DI configuration for Chapter 10 / Recipe 04 is hidden within AddChatBot()
-// feel free to comment it out
-builder.AddChatBot();
+// CHAPTER 10
 
-// for clarity, DI configuration for Chapter 10 / Recipe 05 is hidden within EnhanceChatBotWithExistingData()
-// feel free to comment it out
-builder.EnhanceChatBotWithExistingData();
+// services for smart components, uncomment when needed
+// note: you must also comment out the explicit Azure.AI.OpenAI dependency in the project file
 
 builder.Services
        .AddSmartComponents()
        .WithInferenceBackend<OpenAIInferenceBackend>();
 
+// recipe 04
+
+var endpoint = builder.Configuration["ChatBot:Endpoint"];
+var apiKey = builder.Configuration["ChatBot:ApiKey"];
+var deploymentName = builder.Configuration["ChatBot:DeploymentName"];
+
+builder.Services.AddSingleton(new Azure.AI.OpenAI.AzureOpenAIClient(
+    new Uri(endpoint), new System.ClientModel.ApiKeyCredential(apiKey)));
+
+builder.Services.AddScoped(services =>
+{
+    var openAI = services.GetRequiredService<Azure.AI.OpenAI.AzureOpenAIClient>();
+    return openAI.GetChatClient(deploymentName);
+});
+
+// recipe 05
+
+//var searchEndpoint = builder.Configuration["Search:Endpoint"];
+//var searchApiKey = builder.Configuration["Search:ApiKey"];
+//var searchIndex = builder.Configuration["Search:Index"];
+
+//builder.Services.AddSingleton(services =>
+//{
+//    var dataSource = new AzureSearchChatDataSource
+//    {
+//        Endpoint = new Uri(searchEndpoint),
+//        IndexName = searchIndex,
+//        Authentication = DataSourceAuthentication.FromApiKey(searchApiKey)
+//    };
+
+//    ChatCompletionOptions completionOptions = new();
+//    completionOptions.AddDataSource(dataSource);
+//    return completionOptions;
+//});
+
 builder.Services
        .AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
-
 
 var app = builder.Build();
 
