@@ -1,0 +1,19 @@
+@using BlazorCookbook.App.Client.Chapters.Chapter02.Data
+@page "/ch02r05"
+@rendermode InteractiveWebAssembly
+
+<IntroductionForm @bind-Name="@Name"
+                  @bind-Skill="@Skill" />
+
+<hr />
+@if (!IsGreetingReady) return;
+<h5>Welcome @Name on level @Skill.Title!</h5>
+
+@code {
+    protected string Name { get; set; }
+    protected SkillLevel Skill { get; set; }
+
+    private bool IsGreetingReady
+        => !string.IsNullOrWhiteSpace(Name)
+        && Skill is not null;
+}

@@ -1,0 +1,44 @@
+﻿@page "/ch08r07"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<p>
+    <button @onclick=@GoToTicketsAsync>
+        Support tickets
+    </button>
+</p>
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; }
+
+    private async Task GoToTicketsAsync()
+    {
+        var user = (await AuthState).User;
+
+        if (user.Identity is null)
+        {
+            Navigation.NavigateTo("/Account/Login");
+            return;
+        }
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/Account/Login");
+            return;
+        }
+
+        if (!user.Identity.Name.EndsWith("@packt.com"))
+        {
+            Navigation.NavigateTo("/tickets");
+            return;
+        }
+
+        if (user.IsInRole("Support") || user.IsInRole("Admin"))
+        {
+            Navigation.NavigateTo("/tickets/admin");
+            return;
+        }
+
+        Navigation.NavigateTo("/tickets/denied");
+    }
+}

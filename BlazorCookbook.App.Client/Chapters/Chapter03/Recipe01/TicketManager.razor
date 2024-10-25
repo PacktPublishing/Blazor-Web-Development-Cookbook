@@ -1,0 +1,27 @@
+﻿@page "/ch03r01"
+@rendermode InteractiveWebAssembly
+
+<button class="btn btn-sm btn-success"
+        @onclick="@ToggleTickets">
+    Toggle Tickets
+</button>
+
+@if (!ShowTickets) return;
+<hr />
+
+@foreach (var ticket in Tickets.All)
+{
+    <div class="d-flex justify-content-between mb-1"
+         id="ticket-@ticket.Id">
+
+        <div>@ticket.Title</div>
+        
+    </div>
+}
+
+@code {
+    protected bool ShowTickets { get; set; }
+
+    private void ToggleTickets()
+        => ShowTickets = !ShowTickets;
+}

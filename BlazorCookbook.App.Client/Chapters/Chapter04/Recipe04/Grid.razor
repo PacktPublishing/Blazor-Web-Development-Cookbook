@@ -1,0 +1,85 @@
+﻿@typeparam T
+@attribute [CascadingTypeParameter(nameof(T))]
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var column in Columns)
+            {
+                <th @onclick="@(() => SortAsync(column))">
+                    @column.Label
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var element in Set)
+        {
+            <tr>
+                @foreach (var column in Columns)
+                {
+                    <td>@column.Template(element)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<Paginator @ref="@PaginatorRef"
+           Paginate="@LoadAsync"
+           DataSize="@Data.Count" />
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<T> Data { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    protected List<ColumnViewModel<T>> Columns = [];
+    public void AddColumn(ColumnViewModel<T> column)
+        => Columns.Add(column);
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) StateHasChanged();
+    }
+
+    protected IEnumerable<T> Set = [];
+    public Task LoadAsync(PaginateEventArgs args)
+    {
+        Set = Data.Skip((args.Page - 1) * args.Size)
+                  .Take(args.Size);
+
+        return Task.CompletedTask;
+    }
+
+    private string _currentSortColumn;
+    private bool _isAsc;
+    protected Paginator PaginatorRef;
+
+    public Task SortAsync(ColumnViewModel<T> column)
+    {
+        if (_currentSortColumn == column.Label)
+            _isAsc = !_isAsc;
+        else
+            _isAsc = true;
+
+        Comparison<T> comparer = (left, right) =>
+        {
+            var result = Comparer<object>.Default
+                .Compare(column.Property(left), column.Property(right));
+
+            return _isAsc ? result : -result;
+        };
+        Data.Sort(comparer);
+
+        _currentSortColumn = column.Label;
+        return PaginatorRef.LoadAsync();
+    }
+}

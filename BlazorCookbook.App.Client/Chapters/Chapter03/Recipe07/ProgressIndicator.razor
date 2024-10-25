@@ -1,0 +1,29 @@
+﻿<button class="btn btn-sm btn-success"
+        @onclick="@RunAsync"
+        disabled="@(Progress > 0)">
+    @Label
+</button>
+
+@code {
+    [Parameter, EditorRequired]
+    public Func<int, Task> Job { get; set; }
+    [Parameter, EditorRequired]
+    public int Total { get; set; }
+
+    internal double Progress = 0;
+
+    private string Label
+        => Progress > 0 ? $"Processing {Progress:0%}"
+                        : "Process";
+
+    private async Task RunAsync()
+    {
+        for (int i = 0; i < Total; i++)
+        {
+            Progress = 1.0 * (1 + i) / Total;
+            StateHasChanged();
+            await Job.Invoke(i);
+        }
+        Progress = 0;
+    }
+}

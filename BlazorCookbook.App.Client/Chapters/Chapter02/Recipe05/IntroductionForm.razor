@@ -1,0 +1,39 @@
+@using BlazorCookbook.App.Client.Chapters.Chapter02.Data
+
+<h5>What's your name?</h5>
+<input class="form-control w-50 mb-1" @bind="@Name"
+       @bind:event="oninput"
+       @bind:after=@OnNameChanged />
+
+<h5>What's your skill level?</h5>
+<select class="form-control w-50 mb-1"
+        @onchange="@OnSkillChanged">
+    <option value="0">-</option>
+    @foreach (var level in DataSeed.SkillLevels)
+    {
+        <option value="@level.Id">
+            @level.Title
+        </option>
+    }
+</select>
+
+@code {
+    [Parameter] public string Name { get; set; }
+    [Parameter]
+    public EventCallback<string> NameChanged { get; set; }
+
+    [Parameter] public SkillLevel Skill { get; set; }
+    [Parameter]
+    public EventCallback<SkillLevel> SkillChanged { get; set; }
+
+    private Task OnNameChanged()
+        => NameChanged.InvokeAsync(Name);
+
+    private Task OnSkillChanged(ChangeEventArgs args)
+    {
+        var id = int.Parse(args.Value.ToString());
+        var skill = DataSeed.SkillLevels
+            .SingleOrDefault(it => it.Id == id);
+        return SkillChanged.InvokeAsync(skill);
+    }
+}

@@ -1,0 +1,10 @@
+﻿@page "/ch05r07/server"
+@rendermode InteractiveServer
+@inherits CrossingInteractiveBoundary<CartState>
+
+<button @onclick="@(() => State.Add())">Add to cart</button>
+<p>Last cart change: @State.UpdateTime</p>
+
+<p>
+    <a href="/ch05r07">Return</a>
+</p>

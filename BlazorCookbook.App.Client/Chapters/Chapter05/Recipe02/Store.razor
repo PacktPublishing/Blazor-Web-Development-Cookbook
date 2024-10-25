@@ -1,0 +1,32 @@
+﻿@page "/ch05r02"
+@rendermode Config.PrerenderDisabled
+
+@foreach (var item in Data)
+{
+    <div class="row w-50 m-1">
+        <button @onclick="@(() => ShowDetails(item))">
+            @item.Id
+        </button>
+    </div>
+}
+
+@code {
+    [Inject]
+    private StateContainer<Event> Container { get; init; }
+
+    [Inject]
+    private NavigationManager Navigation { get; init; }
+
+    [Inject]
+    private Api Api { get; init; }
+
+    protected IList<Event> Data = [];
+    protected override async Task OnInitializedAsync()
+        => Data = await Api.GetEventsAsync(default);
+
+    public void ShowDetails(Event @event)
+    {
+        Container.Persist(@event.Id, @event);
+        Navigation.NavigateTo($"/ch05r02/events/{@event.Id}");
+    }
+}

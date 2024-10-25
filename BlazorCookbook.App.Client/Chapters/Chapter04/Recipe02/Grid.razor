@@ -1,0 +1,46 @@
+﻿@typeparam T
+@attribute [CascadingTypeParameter(nameof(T))]
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var column in Columns)
+            {
+                <th @onclick="@column.OnSort">
+                    @column.Label
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var element in Data)
+       {
+           <tr>
+               @foreach (var column in Columns)
+               {
+                   <td>@column.Template(element)</td>
+               }
+           </tr>
+       }
+   </tbody>
+</table>
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<T> Data { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+    
+    protected List<ColumnViewModel<T>> Columns = [];
+    public void AddColumn(ColumnViewModel<T> column)
+        => Columns.Add(column);
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) StateHasChanged();
+    }
+}

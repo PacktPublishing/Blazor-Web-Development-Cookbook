@@ -1,0 +1,22 @@
+﻿@typeparam T
+
+<table class="grid">
+    <thead>
+        @Header
+    </thead>
+    <tbody>
+        @foreach (var item in Data)
+            @Row(item)
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public IList<T> Data { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<T> Row { get; set; }
+}

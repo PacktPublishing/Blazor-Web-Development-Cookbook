@@ -1,0 +1,25 @@
+﻿@using BlazorCookbook.App.Configuration
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BlazorCookbook.App</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+
+        @foreach (var chapter in ChaptersContainer.Values)
+        {
+            string url = $"chapters/{chapter.No}", label = $"Chapter {chapter.No}";
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@url">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> @label
+                </NavLink>
+            </div>
+        }
+
+    </nav>
+</div>

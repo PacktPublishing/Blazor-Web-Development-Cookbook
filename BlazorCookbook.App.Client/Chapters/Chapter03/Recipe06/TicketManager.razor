@@ -1,0 +1,81 @@
+﻿@page "/ch03r06"
+@rendermode InteractiveWebAssembly
+
+<h5>Quick creation</h5>
+<p>
+    <input value="@Creator"
+           @onkeydown="MonitorCreation"
+           @onkeydown:preventDefault />
+</p>
+
+<button class="btn btn-sm btn-success"
+        @onclick="@ToggleTickets">
+    Toggle Tickets
+</button>
+
+@if (!ShowTickets) return;
+<hr />
+
+@foreach (var ticket in Tickets.All)
+{
+    <div class="d-flex justify-content-between mb-1"
+            id="ticket-@ticket.Id"
+            @onclick="() => Show(ticket)">
+
+        <div>@ticket.Title</div>
+        <div>
+            <TicketOptions OnShow="@(() => Show(ticket))"
+                            OnTopUp="@(() => TopUp(ticket))"
+                            OnRemove="@(() => Remove(ticket))" />
+        </div>
+    </div>
+}
+
+@if (SelectedTicket is null) return;
+<hr />
+
+<PreventCopy>
+    <div>Title: @SelectedTicket.Title</div>
+    <div>Price: @SelectedTicket.Price</div>
+    <div>Stock: @SelectedTicket.Stock</div>
+</PreventCopy>
+
+@code {
+    protected bool ShowTickets { get; set; }
+
+    private void ToggleTickets()
+        => ShowTickets = !ShowTickets;
+
+    internal Ticket SelectedTicket;
+
+    private void Show(Ticket ticket)
+        => SelectedTicket = ticket;
+
+    private void TopUp(Ticket ticket)
+        => ticket.Stock += 5;
+
+    private void Remove(Ticket ticket)
+        => Tickets.All.Remove(ticket);
+
+    internal string Creator = string.Empty;
+
+    private void MonitorCreation(KeyboardEventArgs args)
+    {
+        if (args.Key == "+")
+        {
+            Tickets.All.Add(new() { Title = Creator });
+            Creator = string.Empty;
+            return;
+        }
+        if (args.IsBackspace() && Creator.Length > 0)
+        {
+            Creator = Creator[..^1];
+            return;
+        }
+        if (args.IsLetter())
+        {
+            Creator += args.Key;
+            return;
+        }
+    }
+}

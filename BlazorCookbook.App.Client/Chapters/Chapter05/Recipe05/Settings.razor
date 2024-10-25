@@ -1,0 +1,26 @@
+﻿@page "/ch05r05"
+@rendermode InteractiveWebAssembly
+
+<button @onclick="@(() => SetViewModeAsync(_light))">
+    Turn the light on!
+</button>
+<button @onclick="@(() => SetViewModeAsync(_dark))">
+    Turn the light off!
+</button>
+
+@code {
+    [Inject] private BrowserStorage Storage { get; init; }
+
+    private const string _key = "viewMode",
+        _light = "lightMode", _dark = "darkMode";
+
+    public async Task SetViewModeAsync(string mode)
+    {
+        var value = new LocalStorageValue<string>
+        {
+            Key = _key,
+            Value = mode
+        };
+        await Storage.PersistAsync(value);
+    }
+}

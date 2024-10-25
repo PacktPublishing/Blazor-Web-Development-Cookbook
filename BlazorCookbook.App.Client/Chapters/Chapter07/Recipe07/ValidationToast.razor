@@ -1,0 +1,39 @@
+﻿@implements IDisposable
+@if (!IsDisplayed) return;
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1">
+    <div class="toast text-white bg-danger show">
+        <div class="toast-header justify-content-end" />
+        <div class="toast-body">
+            @foreach (var message in Context.GetValidationMessages())
+            {
+                <div>@message</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public EditContext Context { get; set; }
+
+    protected bool IsDisplayed;
+
+    protected override void OnInitialized()
+        => Context.OnValidationStateChanged += OnStateChanged;
+
+    public void Dispose()
+        => Context.OnValidationStateChanged -= OnStateChanged;
+
+    private void OnStateChanged(object sender, ValidationStateChangedEventArgs args)
+    {
+        IsDisplayed = Context.GetValidationMessages().Any();
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        IsDisplayed = false;
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,32 @@
+﻿<button class="btn btn-sm btn-success"
+        @onclick="@RunAsync"
+        disabled="@IsLoading">
+    Load
+</button>
+
+@if (IsLoading)
+{
+    <hr />
+    <p>Loading...</p>
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Func<Task> Job { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    internal bool IsLoading;
+    private async Task RunAsync()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        await Job.Invoke();
+        IsLoading = false;
+    }
+}

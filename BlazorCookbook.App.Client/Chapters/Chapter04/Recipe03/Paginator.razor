@@ -1,0 +1,49 @@
+﻿<div class="d-flex">
+    <button @onclick="@PreviousAsync">
+        Previous
+    </button>
+    <input disabled class="text-center"
+           value="@CurrentPage" />
+    <button @onclick="@NextAsync">
+        Next
+    </button>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public EventCallback<PaginateEventArgs> Paginate { get; set; }
+    [Parameter, EditorRequired]
+    public int DataSize { get; set; }
+
+    protected int TotalPages,
+                  CurrentPage = 1,
+                  PageSize = 5;
+
+    protected override void OnInitialized()
+        => TotalPages = (DataSize + PageSize - 1) / PageSize;
+
+    private Task LoadAsync()
+    {
+        var state = new PaginateEventArgs(CurrentPage, PageSize);
+        return Paginate.InvokeAsync(state);
+    }
+
+    private async Task NextAsync()
+    {
+        if (CurrentPage == TotalPages) return;
+        CurrentPage++;
+        await LoadAsync();
+    }
+
+    private async Task PreviousAsync()
+    {
+        if (CurrentPage == 1) return;
+        CurrentPage--;
+        await LoadAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) await LoadAsync();
+    }
+}

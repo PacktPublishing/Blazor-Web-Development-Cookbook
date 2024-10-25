@@ -1,0 +1,54 @@
+@attribute [Route(DeepLinks.LandingPage)]
+@attribute [Route(DeepLinks.EventPage)]
+@attribute [Route(DeepLinks.EventAtVenuePage)]
+
+@rendermode InteractiveWebAssembly
+@implements IDisposable
+
+<h1>Welcome in the external event manager!</h1>
+
+@if (EventId == default)
+{
+    <button class="btn btn-primary"
+            @onclick="@GetAsync">
+        Get event
+    </button>
+    return;
+}
+
+<p>Event ID: @EventId</p>
+<p>In @(Venue ?? "all venues")</p>
+
+@if (Date == default) return;
+<p>On @Date</p>
+
+@code {
+    [Inject] private NavigationManager Nav { get; init; }
+    private CancellationTokenSource _cts;
+
+    [Parameter] public Guid EventId { get; set; }
+    [Parameter] public string Venue { get; set; }
+
+    [SupplyParameterFromQuery]
+    public DateTime Date { get; set; }
+
+    private void CancelTask(object sender, LocationChangedEventArgs args)
+        => _cts?.Cancel();
+
+    protected override void OnInitialized()
+        => Nav.LocationChanged += CancelTask;
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= CancelTask;
+        _cts?.Dispose();
+    }
+
+    private async Task GetAsync()
+    {
+        _cts = new();
+        var eventId = await Source.LoadAsync(_cts.Token);
+        if (_cts.IsCancellationRequested) return;
+        Nav.NavigateTo($"/ch09r07/{eventId}");
+    }
+}

@@ -1,0 +1,27 @@
+﻿@using BlazorCookbook.App.Configuration
+@page "/chapters/{chapterNumber:int}"
+
+<h3>
+    Chapter @ChapterNumber.ToString("00")
+</h3>
+
+@for (int recipe = 1; recipe < RecipeQuantity + 1; recipe++)
+{
+    <div>
+        <a href="@ConstructUrl(recipe)">Recipe @recipe.ToString("00")</a>
+    </div>
+}
+
+<hr />
+
+@code {
+    [Parameter] public int ChapterNumber { get; set; }
+
+    protected int RecipeQuantity;
+
+    protected override void OnParametersSet()
+        => RecipeQuantity = ChaptersContainer.Values.Single(it => it.No == ChapterNumber).Recipes;
+
+    private string ConstructUrl(int recipe)
+        => $"/ch{ChapterNumber.ToString("00")}r{recipe.ToString("00")}";
+}

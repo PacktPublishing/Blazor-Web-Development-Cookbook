@@ -1,0 +1,35 @@
+﻿@page "/ch05r01"
+@page "/ch05r01/events"
+@page "/ch05r01/events/{eventId:guid}"
+
+@if (Event is not null)
+{
+    <p>Viewing: @Event.Id</p>
+    return;
+}
+
+@foreach (var item in Collection)
+{
+    <div class="w-100">
+        <a href="/ch05r01/events/@item.Id">@item.Id</a>
+    </div>
+}
+
+@code {
+    [Inject] private Api Api { get; init; }
+    [Parameter] public Guid EventId { get; set; }
+
+    protected IList<Event> Collection = [];
+    protected Event Event;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (EventId != Guid.Empty)
+        {
+            Event = await Api.GetEventAsync(EventId, default);
+            return;
+        }
+
+        Collection = await Api.GetEventsAsync(default);
+    }
+}

@@ -1,0 +1,11 @@
+﻿<div @onpreventcopy="@Log">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    private void Log(PreventedCopyEventArgs args)
+        => Console.WriteLine($"Prevented data leak at {args.Stamp} UTC.");
+}

@@ -1,0 +1,20 @@
+@attribute [Route(DeepLinks.LandingPage)]
+@attribute [Route(DeepLinks.EventPage)]
+@attribute [Route(DeepLinks.EventAtVenuePage)]
+
+<h1>Welcome in the external event manager!</h1>
+
+@if (EventId == default) return;
+<p>Event ID: @EventId</p>
+<p>In @(Venue ?? "all venues")</p>
+
+@if (Date == default) return;
+<p>On @Date</p>
+
+@code {
+    [Parameter] public Guid EventId { get; set; }
+    [Parameter] public string Venue { get; set; }
+
+    [SupplyParameterFromQuery]
+    public DateTime Date { get; set; }
+}

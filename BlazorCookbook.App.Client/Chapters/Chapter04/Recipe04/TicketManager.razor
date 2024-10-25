@@ -1,0 +1,13 @@
+﻿@page "/ch04r04"
+@rendermode InteractiveWebAssembly
+
+<Grid Data="@Tickets.LargeDataset">
+    <Column Property="@(it => it.Tariff)"
+            Label="Tariff">
+        @context.Tariff
+    </Column>
+    <Column Property="@(it => it.Price)"
+            Label="Price">
+        @context.Price
+    </Column>
+</Grid>

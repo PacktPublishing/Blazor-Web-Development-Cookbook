@@ -1,0 +1,24 @@
+﻿@typeparam T
+
+<table class="table table-bordered">
+    <thead>
+        @Header
+    </thead>
+    <tbody>
+        @foreach (var element in Data)
+        {
+            @Row(element)
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<T> Data { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment Header { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment<T> Row { get; set; }
+}

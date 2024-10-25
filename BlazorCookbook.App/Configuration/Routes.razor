@@ -1,0 +1,27 @@
+﻿@using BlazorCookbook.Library.Chapter09.Recipe01
+@inject ILogger<Routes> Logger
+
+<Router AppAssembly="@typeof(Program).Assembly"
+        AdditionalAssemblies="new[]
+        {
+            typeof(Client._Imports).Assembly,
+            typeof(ExternalEventManager).Assembly
+        }"
+        OnNavigateAsync="@LogNavigation">
+
+    <Found Context="routeData">
+
+        <RouteView RouteData="@routeData" 
+                   DefaultLayout="@typeof(Layout.MainLayout)" />
+
+        <FocusOnNavigate RouteData="@routeData" 
+                         Selector="h1" />
+
+    </Found>
+
+</Router>
+
+@code {
+    private void LogNavigation(NavigationContext context)
+        => Logger.LogInformation("User entered: {Path}", context.Path);
+}

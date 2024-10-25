@@ -1,0 +1,42 @@
+﻿@* @page "/ch07r01" *@
+@implements IDisposable
+
+<EditForm EditContext="@Context" FormName="event-form"
+          OnValidSubmit="@Save">
+    <DataAnnotationsValidator />
+    <p>Name: <InputText @bind-Value="@Model.Name" /></p>
+    <p><ValidationSummary /></p>
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Event Model { get; set; }
+
+    protected EditContext Context;
+    protected ValidationMessageStore Store;
+
+    private void Save()
+        => Console.WriteLine($"Saved {Model.Name}.");
+
+    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
+    {
+        Store.Clear();
+        if (string.IsNullOrWhiteSpace(Model.Name))
+            Store.Add(() => Model.Name, "You must provide a name.");
+    }
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+        Context = new(Model);
+        Context.OnValidationRequested += ValidateForm;
+        Store = new(Context);
+    }
+
+    public void Dispose()
+    {
+        if (Context is not null)
+            Context.OnValidationRequested -= ValidateForm;
+    }
+}

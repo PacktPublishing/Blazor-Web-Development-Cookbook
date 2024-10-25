@@ -1,0 +1,36 @@
+﻿@page "/ch07r05"
+
+<EditForm EditContext="@Context" FormName="event-form"
+          OnValidSubmit="@Save">
+    <p>Name: <InputText @bind-Value="@Model.Name" /></p>
+    <p>
+        Venue: <InputText @bind-Value="@Model.Location.Venue" />
+    </p>
+    <p>
+        Capacity: <InputNumber @bind-Value="@Model.Location.Capacity" />
+    </p>
+    <p><ValidationSummary /></p>
+    <button type="submit">Save</button>
+    <ObjectGraphDataAnnotationsValidator />
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public Event Model { get; set; }
+
+    protected EditContext Context;
+    protected ValidationMessageStore Store;
+
+    private void Save()
+        => Console.WriteLine($"Saved {Model.Name}.");
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+        Context = new(Model);
+        Store = new(Context);
+
+        Context.SetFieldCssClassProvider(
+            new TypeValidationClassProvider());
+    }
+}

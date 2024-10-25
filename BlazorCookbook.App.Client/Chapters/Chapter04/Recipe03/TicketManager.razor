@@ -1,0 +1,18 @@
+﻿@page "/ch04r03"
+@rendermode InteractiveWebAssembly
+
+<Grid Data="@Tickets.LargeDataset">
+    <Column OnSort="@(() => Sort(nameof(Ticket.Tariff)))"
+            Label="Tariff">
+        @context.Tariff
+    </Column>
+    <Column OnSort="@(() => Sort(nameof(Ticket.Price)))"
+            Label="Price">
+        @context.Price
+    </Column>
+</Grid>
+
+@code {
+    private void Sort(string prop)
+        => Console.WriteLine($"Sorted by {prop}!");
+}
