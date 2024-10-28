@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <ModuleJsFile>dist\SmartComponents.StaticAssets.lib.module.js</ModuleJsFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <UpToDateCheckInput Include="typescript\**\*.ts" />
+        <UpToDateCheckInput Include="css\**\*.css" />
+        <UpToDateCheckInput Include="rollup.config.js" />
+        <UpToDateCheckInput Include="tsconfig.json" />
+    </ItemGroup>
+
+    <Target Name="NpmRestore" BeforeTargets="Build" Condition="!Exists('node_modules')">
+        <Exec Command="npm i" />
+    </Target>
+
+    <Target Name="RollupBuild" DependsOnTargets="PrepareRollupBuild" BeforeTargets="Build" Inputs="@(RollupBuildInputs)" Outputs="$(ModuleJsFile)">
+        <ReadLinesFromFile File="$(_RollupBuildResponseFilePath)">
+            <Output TaskParameter="Lines" ItemName="_RollupBuildArgs" />
+        </ReadLinesFromFile>
+
+      <Exec Command="./node_modules/.bin/rollup @(_RollupBuildArgs)" />
+
+        <!-- We need to touch the primary output file (.dll) so build incrementalism works properly -->
+        <!-- Without doing so, projects that reference this one won't update their own build and pick up changes from this project -->
+        <Touch Files="$(TargetPath)" />
+    </Target>
+
+    <Target Name="PrepareRollupBuild">
+        <PropertyGroup>
+            <!-- Can't be under IntermediateOutputPath because it has to be shared across Debug/Release builds -->
+            <!-- (otherwise when you switch build config, it wouldn't know it needs to rebuild the .js)-->
+            <_RollupBuildResponseFilePath>dist\rollup-build.rsp</_RollupBuildResponseFilePath>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(_RollupBuildResponseFilePath)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                          Lines="-c -o $(ModuleJsFile) --environment BUILD:$(Configuration)"/>
+        <ItemGroup>
+            <RollupBuildInputs Include="typescript\**" />
+            <RollupBuildInputs Include="package-lock.json" />
+            <RollupBuildInputs Include="rollup.config.js" />
+            <RollupBuildInputs Include="tsconfig.json" />
+            <RollupBuildInputs Include="$(_RollupBuildResponseFilePath)" />
+        </ItemGroup>
+    </Target>
+
+</Project>

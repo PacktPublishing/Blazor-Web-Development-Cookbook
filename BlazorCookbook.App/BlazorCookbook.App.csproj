@@ -8,22 +8,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorCookbook.App.Client\BlazorCookbook.App.Client.csproj" />
-    <ProjectReference Include="..\BlazorCookbook.Library\BlazorCookbook.Library.csproj" />
+    <ProjectReference Include="..\BlazorCookbook.Library\BlazorCookbook.Library.csproj" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartComponents\SmartComponents.AspNetCore\SmartComponents.AspNetCore.csproj" />
+    <ProjectReference Include="..\SmartComponents\SmartComponents.Inference.OpenAI\SmartComponents.Inference.OpenAI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0-rc.2.24474.3" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
-  </ItemGroup>
-
-  <!-- required by recipes with SmartComponents -->
-  <ItemGroup>
-    <PackageReference Include="SmartComponents.AspNetCore" Version="0.1.0-preview10148" />
-    <PackageReference Include="SmartComponents.Inference.OpenAI" Version="0.1.0-preview10148"/>
-  </ItemGroup>
-  
-  <!-- required by recipes with ChatBot, comment out for SmartComponents -->
-  <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" Version="2.0.0" />
   </ItemGroup>
 

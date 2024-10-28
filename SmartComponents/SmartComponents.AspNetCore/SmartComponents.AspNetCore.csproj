@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFrameworks>net9.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <LangVersion>latest</LangVersion>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <ProjectReference Include="..\SmartComponents.AspNetCore.Components\SmartComponents.AspNetCore.Components.csproj" />
+        <ProjectReference Include="..\SmartComponents.Inference\SmartComponents.Inference.csproj" />
+    </ItemGroup>
+
+</Project>
