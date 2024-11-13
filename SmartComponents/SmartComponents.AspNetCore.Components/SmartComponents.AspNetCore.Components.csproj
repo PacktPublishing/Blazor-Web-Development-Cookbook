@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <SupportedPlatform Include="browser" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0-rc.1.24452.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
         <ProjectReference Include="..\SmartComponents.StaticAssets\SmartComponents.StaticAssets.csproj" PrivateAssets="All" />
     </ItemGroup>
 
